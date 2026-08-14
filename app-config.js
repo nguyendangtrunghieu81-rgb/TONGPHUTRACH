@@ -1,12 +1,15 @@
+"use strict";
+
+// Tệp sinh cục bộ; không chứa Gmail rõ, token hay client secret.
 window.TPT_APP_CONFIG = Object.freeze({
-  "APP_VERSION": "3.2.0",
-  "BUILD_ID": "20260815-smart-import-v10",
-  "SCHEMA_VERSION": 10,
+  "APP_VERSION": "3.1.0-rc.1",
+  "BUILD_ID": "20260814-drive-rc1",
+  "SCHEMA_VERSION": 9,
   "APP_ID": "vn.giaoducso40.tpt.thcs.thcs",
   "SCHOOL_PROFILE_ID": "thcs-thcs-profile-001",
   "APP_NAMESPACE": "tpt_thcs_thcs_profile_001",
   "DB_NAME": "TPT_DOI_THCS_THCS_DB",
-  "SCHOOL_NAME": "THCS NGUYỄN THỊ ĐỊNH",
+  "SCHOOL_NAME": "THCS",
   "SCHOOL_LEVEL": "THCS",
   "GOOGLE_CLIENT_ID": "422851861968-emastosfnml2m0d8pp38m4hoovh2ihu3.apps.googleusercontent.com",
   "EXPECTED_GOOGLE_EMAIL_SHA256": "10613b6e2d8881771342c929de2d9fae1636014fe0a9b8241876b09b89967d85",
