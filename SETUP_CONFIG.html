@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Tạo cấu hình Google Drive - Trợ lý Tổng phụ trách Đội</title>
+    <style>
+      :root { font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: #17324d; background: #eef5fb; }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 32px 16px; }
+      main { width: min(820px, 100%); margin: auto; background: white; border: 1px solid #d6e3f0; border-radius: 18px; box-shadow: 0 14px 44px rgba(18,63,109,.12); overflow: hidden; }
+      header { padding: 26px 30px; background: #123f6d; color: white; }
+      header h1 { margin: 0 0 8px; font-size: clamp(23px, 4vw, 32px); }
+      header p { margin: 0; line-height: 1.55; color: #dceaf6; }
+      form { padding: 28px 30px 32px; }
+      .notice { padding: 14px 16px; border-radius: 12px; background: #fff8dd; border: 1px solid #efd981; line-height: 1.5; margin-bottom: 22px; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+      label { display: block; font-weight: 700; margin-bottom: 7px; }
+      input { width: 100%; min-height: 44px; border: 1px solid #afc5da; border-radius: 10px; padding: 10px 12px; font: inherit; color: inherit; }
+      input:focus { outline: 3px solid rgba(32,119,185,.18); border-color: #2077b9; }
+      input[readonly] { background: #f4f8fc; color: #59728c; }
+      small { display: block; color: #59728c; line-height: 1.45; margin-top: 6px; }
+      .full { grid-column: 1 / -1; }
+      .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; }
+      button, a.button { appearance: none; border: 1px solid #123f6d; border-radius: 10px; min-height: 44px; padding: 10px 17px; font: inherit; font-weight: 750; cursor: pointer; text-decoration: none; }
+      button { color: white; background: #123f6d; }
+      a.button { color: #123f6d; background: white; display: inline-flex; align-items: center; }
+      #status { min-height: 24px; margin-top: 16px; font-weight: 700; }
+      #status.good { color: #17653b; }
+      #status.bad { color: #a12222; }
+      @media (max-width: 640px) { body { padding: 0; } main { border-radius: 0; border: 0; min-height: 100vh; } header, form { padding-left: 20px; padding-right: 20px; } .grid { grid-template-columns: 1fr; } .full { grid-column: auto; } }
+    </style>
+    <script src="./app-config.js"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Tạo `app-config.js` an toàn</h1>
+        <p>Công cụ chạy hoàn toàn trong trình duyệt. Gmail chỉ được dùng để tạo SHA-256 và không được ghi vào tệp tải xuống.</p>
+      </header>
+      <form id="configForm">
+        <div class="notice"><strong>Không nhập client secret, mật khẩu Google, access token hoặc refresh token.</strong> Google Drive của ứng dụng chỉ cần OAuth Client ID loại “Web application”. Hãy lưu bản `app-config.js` hiện tại trước khi thay thế.</div>
+        <div class="grid">
+          <div class="full">
+            <label for="clientId">Google OAuth Client ID *</label>
+            <input id="clientId" autocomplete="off" spellcheck="false" required placeholder="...apps.googleusercontent.com">
+            <small>Giữ nguyên Client ID hiện tại nếu chỉ triển khai lại cùng giáo viên.</small>
+          </div>
+          <div class="full">
+            <label for="email">Gmail được phép đồng bộ *</label>
+            <input id="email" type="email" autocomplete="off" required placeholder="giaovien@example.com">
+            <small>Tệp kết quả chỉ chứa mã băm SHA-256 của địa chỉ đã chuẩn hóa.</small>
+          </div>
+          <div>
+            <label for="permissionId">Drive permission ID</label>
+            <input id="permissionId" autocomplete="off" spellcheck="false">
+            <small>Không bắt buộc; để trống nếu cấu hình hiện tại không dùng.</small>
+          </div>
+          <div>
+            <label for="repository">Tên repository</label>
+            <input id="repository" autocomplete="off" spellcheck="false">
+          </div>
+          <div>
+            <label for="appId">APP_ID - giữ nguyên</label>
+            <input id="appId" readonly>
+          </div>
+          <div>
+            <label for="dbName">DB_NAME - giữ nguyên</label>
+            <input id="dbName" readonly>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit">Tạo và tải app-config.js</button>
+          <a class="button" href="./index.html">Quay lại ứng dụng</a>
+        </div>
+        <div id="status" role="status" aria-live="polite"></div>
+      </form>
+    </main>
+    <script>
+      "use strict";
+      const current = window.TPT_APP_CONFIG || {};
+      const $ = (selector) => document.querySelector(selector);
+      $("#clientId").value = current.GOOGLE_CLIENT_ID || "";
+      $("#permissionId").value = current.EXPECTED_DRIVE_PERMISSION_ID || "";
+      $("#repository").value = current.REPOSITORY_NAME || "TROLYTONGPHUTRACH";
+      $("#appId").value = current.APP_ID || "vn.giaoducso40.tpt.thcs.thcs";
+      $("#dbName").value = current.DB_NAME || "TPT_DOI_THCS_THCS_DB";
+
+      async function sha256(value) {
+        const bytes = new TextEncoder().encode(value);
+        const digest = await crypto.subtle.digest("SHA-256", bytes);
+        return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+      }
+
+      $("#configForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const status = $("#status");
+        status.className = "";
+        status.textContent = "Đang tạo cấu hình…";
+        try {
+          const clientId = $("#clientId").value.trim();
+          const email = $("#email").value.trim().toLowerCase();
+          if (!clientId.endsWith(".apps.googleusercontent.com")) throw new Error("OAuth Client ID không đúng định dạng Web application.");
+          if (!email.includes("@")) throw new Error("Gmail không hợp lệ.");
+          const config = {
+            APP_VERSION: current.APP_VERSION || "3.2.0",
+            BUILD_ID: current.BUILD_ID || "20260815-smart-import-v10",
+            SCHEMA_VERSION: Number(current.SCHEMA_VERSION || 10),
+            APP_ID: current.APP_ID || "vn.giaoducso40.tpt.thcs.thcs",
+            SCHOOL_PROFILE_ID: current.SCHOOL_PROFILE_ID || "thcs-thcs-profile-001",
+            APP_NAMESPACE: current.APP_NAMESPACE || "tpt_thcs_thcs_profile_001",
+            DB_NAME: current.DB_NAME || "TPT_DOI_THCS_THCS_DB",
+            SCHOOL_NAME: current.SCHOOL_NAME || "THCS NGUYỄN THỊ ĐỊNH",
+            SCHOOL_LEVEL: current.SCHOOL_LEVEL || "THCS",
+            GOOGLE_CLIENT_ID: clientId,
+            EXPECTED_GOOGLE_EMAIL_SHA256: await sha256(email),
+            EXPECTED_DRIVE_PERMISSION_ID: $("#permissionId").value.trim(),
+            REPOSITORY_NAME: $("#repository").value.trim() || "TROLYTONGPHUTRACH",
+            BASE_PATH: "./",
+          };
+          const source = `window.TPT_APP_CONFIG = Object.freeze(${JSON.stringify(config, null, 2)});\n`;
+          const url = URL.createObjectURL(new Blob([source], { type: "text/javascript;charset=utf-8" }));
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "app-config.js";
+          link.click();
+          setTimeout(() => URL.revokeObjectURL(url), 1_000);
+          $("#email").value = "";
+          status.className = "good";
+          status.textContent = "Đã tạo app-config.js. Hãy kiểm tra, sao lưu tệp cũ rồi mới thay thế.";
+        } catch (error) {
+          status.className = "bad";
+          status.textContent = error.message;
+        }
+      });
+    </script>
+  </body>
+</html>
