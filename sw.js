@@ -1,6 +1,9 @@
 "use strict";
 
-const CACHE_NAME = "tpt-doi-thcs-v3-2-0";
+// Bump this when the deployed app shell changes. app-config.js is always
+// refreshed from the network so a teacher can replace the public config
+// without being trapped by an older Service Worker cache.
+const CACHE_NAME = "tpt-doi-thcs-v3-2-1";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -71,6 +74,20 @@ self.addEventListener("fetch", (event) => {
           (await caches.match("./index.html")) ||
           caches.match("./offline.html"),
         ),
+    );
+    return;
+  }
+
+  const configUrl = new URL("./app-config.js", self.registration.scope).href;
+  if (url.href === configUrl) {
+    event.respondWith(
+      fetch(event.request, { cache: "no-store" })
+        .then((response) => {
+          if (response.ok)
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, response.clone()));
+          return response;
+        })
+        .catch(() => caches.match(event.request, { ignoreSearch: true })),
     );
     return;
   }
