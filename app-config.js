@@ -1,6 +1,3 @@
-"use strict";
-
-// Tệp sinh cục bộ; không chứa Gmail rõ, token hay client secret.
 window.TPT_APP_CONFIG = Object.freeze({
   "APP_VERSION": "3.2.0",
   "BUILD_ID": "20260815-smart-import-v10",
@@ -9,11 +6,11 @@ window.TPT_APP_CONFIG = Object.freeze({
   "SCHOOL_PROFILE_ID": "thcs-thcs-profile-001",
   "APP_NAMESPACE": "tpt_thcs_thcs_profile_001",
   "DB_NAME": "TPT_DOI_THCS_THCS_DB",
-  "SCHOOL_NAME": "TH - THCS",
-  "SCHOOL_LEVEL": "TH - THCS",
+  "SCHOOL_NAME": "THCS NGUYỄN THỊ ĐỊNH",
+  "SCHOOL_LEVEL": "THCS",
   "GOOGLE_CLIENT_ID": "422851861968-emastosfnml2m0d8pp38m4hoovh2ihu3.apps.googleusercontent.com",
-  "EXPECTED_GOOGLE_EMAIL_SHA256": "3bd4a97daab011dc261cfdb42ede08779f2298d849821a758c0aa9ee1c3c413b",
+  "EXPECTED_GOOGLE_EMAIL_SHA256": "10613b6e2d8881771342c929de2d9fae1636014fe0a9b8241876b09b89967d85",
   "EXPECTED_DRIVE_PERMISSION_ID": "",
-  "REPOSITORY_NAME": "TROLYTONGPHUTRACH",
+  "REPOSITORY_NAME": "TONGPHUTRACH",
   "BASE_PATH": "./"
 });
