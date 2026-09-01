@@ -1412,10 +1412,35 @@
       bindImportWorkspace(session);
     }
 
+    function findBestImportTable(tables, type) {
+      const schema = engine.TYPES[type];
+      if (!schema || !tables.length) return { tableIndex: 0, headerIndex: 0 };
+      let best = { tableIndex: 0, headerIndex: 0, score: -1 };
+      tables.forEach((table, tableIndex) => {
+        const headerIndex = engine.detectHeaderRow(table.rows, type),
+          mapping = engine.autoMap(table.rows[headerIndex] || [], type),
+          mappedFields = Object.keys(mapping),
+          requiredFields = schema.fields
+            .filter(([, , required]) => required)
+            .map(([name]) => name),
+          requiredMapped = requiredFields.filter((name) =>
+            Number.isInteger(mapping[name]),
+          ).length,
+          dataRows = Math.max(0, table.rows.length - headerIndex - 1),
+          score = requiredMapped * 100 + mappedFields.length * 10 + Math.min(dataRows, 9);
+        if (score > best.score)
+          best = { tableIndex, headerIndex, score };
+      });
+      return best;
+    }
+
     function setImportTables(session, tables) {
-      session.tables = tables.filter((table) => Array.isArray(table.rows) && table.rows.length);
-      session.tableIndex = 0;
-      session.headerIndex = null;
+      session.tables = tables.filter(
+        (table) => Array.isArray(table.rows) && table.rows.length,
+      );
+      const selected = findBestImportTable(session.tables, session.type);
+      session.tableIndex = selected.tableIndex;
+      session.headerIndex = selected.headerIndex;
       session.mapping = {};
       session.defaults = {};
       session.edits = {};
@@ -2817,24 +2842,7 @@
           dataSheet["!autofilter"] = {
             ref: `A1:${XLSX.utils.encode_col(headers.length - 1)}${rows.length}`,
           };
-        const guideRows = [
-          [`MẪU NHẬP ${schema.label.toUpperCase()}`],
-          ["Nguyên tắc", "Không đổi tên hàng tiêu đề; mã định danh được giữ dạng văn bản."],
-          ["Ngày tháng", "Dùng YYYY-MM-DD hoặc DD/MM/YYYY; kiểm tra preview trước khi nhập."],
-          ["Dữ liệu nhạy cảm", "Không tự suy đoán giới tính hoặc thông tin còn thiếu."],
-          ["Xử lý trùng", "Chọn bỏ qua, điền trường trống, cập nhật theo mã hoặc tạo mới tại Trung tâm nhập dữ liệu."],
-          [],
-          ["Cột", "Bắt buộc", "Mô tả"],
-          ...schema.fields.map(([name, label, required]) => [
-            name,
-            required ? "Có" : "Không",
-            label,
-          ]),
-        ];
-        const guideSheet = XLSX.utils.aoa_to_sheet(guideRows);
-        guideSheet["!cols"] = [{ wch: 28 }, { wch: 18 }, { wch: 72 }];
         const book = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(book, guideSheet, "HƯỚNG DẪN");
         XLSX.utils.book_append_sheet(book, dataSheet, "DỮ LIỆU");
         const array = XLSX.write(book, { type: "array", bookType: "xlsx" });
         download(
