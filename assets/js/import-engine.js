@@ -102,6 +102,14 @@
         ["school_year", "Năm học", false, ["namhoc", "nam_hoc", "school_year"]],
         ["ordinal", "Số thứ tự", false, ["sothutu", "so_thu_tu", "stt", "ordinal"]],
         ["status", "Trạng thái", false, ["trangthai", "trang_thai", "status"]],
+        ["organization_status", "Tình trạng Đội", false, ["tinhtrangdoi", "tinh_trang_doi", "tochucdoi", "organization_status"]],
+        ["organization_joined_date", "Ngày kết nạp", false, ["ngayketnap", "ngay_ket_nap", "organization_joined_date"]],
+        ["policy_groups", "Diện chính sách", false, ["dienchinhsach", "dien_chinh_sach", "chinhsach", "policy_groups"]],
+        ["difficulty_status", "Tình trạng khó khăn", false, ["tinhtrangkhoKhan", "tinh_trang_kho_khan", "khokhan", "difficulty_status"]],
+        ["special_needs", "Đặc điểm cần lưu ý", false, ["hocsinhdacbiet", "hoc_sinh_dac_biet", "dacdiemcanluuy", "special_needs"]],
+        ["support_notes", "Hỗ trợ và theo dõi", false, ["hotrotheodoi", "ho_tro_theo_doi", "support_notes"]],
+        ["guardian_name", "Người liên hệ", false, ["nguoilienhe", "nguoi_lien_he", "guardian_name"]],
+        ["guardian_phone", "Điện thoại liên hệ", false, ["dienthoailienhe", "dien_thoai_lien_he", "guardian_phone"]],
         ["notes", "Ghi chú", false, ["ghichu", "ghi_chu", "notes"]],
       ],
       key: (row, context) =>
@@ -118,6 +126,10 @@
         ["end_date", "Ngày kết thúc", false, ["ngayketthuc", "ngay_ket_thuc", "end_date"]],
         ["objectives", "Mục tiêu", false, ["muctieu", "muc_tieu", "objectives"]],
         ["status", "Trạng thái", false, ["trangthai", "trang_thai", "status"]],
+        ["progress", "Tiến độ (%)", false, ["tiendo", "tien_do", "progress"]],
+        ["result", "Kết quả thực hiện", false, ["ketqua", "ket_qua", "result"]],
+        ["evidence", "Minh chứng", false, ["minhchung", "minh_chung", "evidence"]],
+        ["notes", "Ghi chú", false, ["ghichu", "ghi_chu", "notes"]],
       ],
       key: (row, context) => [context.schoolYearId, codeText(row.code)].join("|"),
     },
@@ -128,11 +140,18 @@
         ["code", "Mã công việc", false, ["macongviec", "ma_cong_viec", "code"]],
         ["title", "Tên công việc", true, ["tencongviec", "ten_cong_viec", "tieude", "title"]],
         ["description", "Mô tả", false, ["mota", "mo_ta", "description"]],
+        ["plan_code", "Mã kế hoạch", false, ["makehoach", "ma_ke_hoach", "plan_code"]],
+        ["start_date", "Ngày bắt đầu", false, ["ngaybatdau", "ngay_bat_dau", "start_date"]],
         ["due_date", "Hạn hoàn thành", false, ["hanhoanthanh", "han_hoan_thanh", "due_date"]],
         ["priority", "Ưu tiên", false, ["uutien", "uu_tien", "priority"]],
         ["assignee", "Người phụ trách", false, ["nguoiphutrach", "nguoi_phu_trach", "assignee"]],
         ["campus_code", "Mã cơ sở", false, ["macoso", "ma_co_so", "campus_code"]],
         ["status", "Trạng thái", false, ["trangthai", "trang_thai", "status"]],
+        ["progress", "Tiến độ (%)", false, ["tiendo", "tien_do", "progress"]],
+        ["completion_date", "Ngày hoàn thành", false, ["ngayhoanthanh", "ngay_hoan_thanh", "completion_date"]],
+        ["result", "Kết quả thực hiện", false, ["ketqua", "ket_qua", "result"]],
+        ["evidence", "Minh chứng", false, ["minhchung", "minh_chung", "evidence"]],
+        ["notes", "Ghi chú", false, ["ghichu", "ghi_chu", "notes"]],
       ],
       key: (row, context) => [context.schoolYearId, codeText(row.code || row.title)].join("|"),
     },
@@ -405,13 +424,36 @@
     }
     for (const name of ["code", "student_code", "incident_code", "class_code", "campus_code", "criterion_code", "equipment_code"])
       if (name in output) output[name] = codeText(output[name]);
-    for (const name of ["birth_date", "start_date", "end_date", "due_date", "date", "recognized_date"])
+    for (const name of ["birth_date", "start_date", "end_date", "due_date", "completion_date", "date", "recognized_date", "organization_joined_date"])
       if (name in output && output[name]) output[name] = dateValue(output[name]);
-    for (const name of ["grade", "size", "ordinal", "max_score", "score", "proposed_deduction", "quantity", "order"])
+    for (const name of ["grade", "size", "ordinal", "max_score", "score", "proposed_deduction", "quantity", "order", "progress"])
       if (name in output && output[name] !== "") output[name] = numberValue(output[name]);
     if ("status" in output && !output.status) output.status = "active";
     if (type === "classes" || type === "students" || type === "homeroom_teachers")
       output.school_year_id = context.schoolYearId || output.school_year_id || "";
+    if (type === "students") {
+      const organizationKey = keyText(output.organization_status);
+      output.organization_status =
+        ({
+          nhi_dong: "nhi_dong",
+          du_bi_doi_vien: "du_bi",
+          du_bi: "du_bi",
+          doi_vien: "doi_vien",
+          doan_vien: "doan_vien",
+          chua_xac_dinh: "chua_xac_dinh",
+          "": "chua_xac_dinh",
+        })[organizationKey] || output.organization_status;
+      const difficultyKey = keyText(output.difficulty_status);
+      output.difficulty_status =
+        ({
+          khong: "none",
+          khong_co: "none",
+          can_theo_doi: "monitor",
+          can_ho_tro: "support",
+          can_ho_tro_khan: "urgent",
+          "": "none",
+        })[difficultyKey] || output.difficulty_status;
+    }
     if (type !== "campuses" && context.schoolYearId) {
       output.school_year_id ||= context.schoolYearId;
       output.academic_year_id ||= context.schoolYearId;
@@ -452,9 +494,9 @@
       for (const [name, label, required] of schema.fields) {
         if (required && (row[name] === "" || row[name] == null)) errors.push(`Thiếu ${label}`);
       }
-      for (const name of ["birth_date", "start_date", "end_date", "due_date", "date", "recognized_date"])
+      for (const name of ["birth_date", "start_date", "end_date", "due_date", "completion_date", "date", "recognized_date", "organization_joined_date"])
         if (name in row && row[name] === null) errors.push(`Sai định dạng ngày ở ${name}`);
-      for (const name of ["grade", "size", "ordinal", "max_score", "score", "proposed_deduction", "quantity", "order"])
+      for (const name of ["grade", "size", "ordinal", "max_score", "score", "proposed_deduction", "quantity", "order", "progress"])
         if (name in row && Number.isNaN(row[name])) errors.push(`Sai kiểu số ở ${name}`);
       if (type === "classes" && row.grade != null && !Number.isNaN(row.grade) && (row.grade < 1 || row.grade > 9))
         errors.push("Khối phải từ 1 đến 9");
@@ -467,6 +509,22 @@
       if (type === "equipment" && Number.isFinite(row.quantity) && row.quantity < 0)
         errors.push("Số lượng không được âm");
       if (type === "students") {
+        if (
+          ![
+            "chua_xac_dinh",
+            "nhi_dong",
+            "du_bi",
+            "doi_vien",
+            "doan_vien",
+          ].includes(row.organization_status)
+        )
+          errors.push("Tình trạng Đội không hợp lệ");
+        if (
+          !["none", "monitor", "support", "urgent"].includes(
+            row.difficulty_status,
+          )
+        )
+          errors.push("Tình trạng khó khăn không hợp lệ");
         const nameKey = [codeText(row.class_code), keyText(row.full_name)].join("|");
         if (seenNames.has(nameKey)) warnings.push("Trùng họ tên trong cùng lớp trong tệp");
         if (existingStudentNames.has(nameKey)) warnings.push("Đã có học sinh trùng họ tên trong lớp; đối chiếu mã học sinh");

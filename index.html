@@ -11,9 +11,9 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <meta
       name="description"
-      content="Trợ lý ngoại tuyến quản lý công tác Đội, thi đua lớp và báo cáo dành cho Tổng phụ trách Đội THCS."
+      content="Trợ lý quản lý công tác Đội, học sinh, thi đua và báo cáo dành cho trường tiểu học, THCS và liên cấp."
     />
-    <title>Trợ lý Tổng phụ trách Đội THCS</title>
+    <title>Trợ lý Tổng phụ trách Đội</title>
     <style>
       :root {
         --blue: #0b6bcb;
@@ -27,7 +27,7 @@
         --ink: #172235;
         --muted: #667085;
         --line: #dce4ec;
-        --bg: #f4f7fa;
+        --bg: #f3f8ff;
         --card: #fff;
         --sidebar: 248px;
         --top: 62px;
@@ -53,7 +53,9 @@
           Arial,
           sans-serif;
         color: var(--ink);
-        background: var(--bg);
+        background:
+          radial-gradient(circle at 85% 0%, #fff7d6 0, transparent 24%),
+          linear-gradient(135deg, #f3f8ff 0%, #f7fbf7 55%, #fff8f2 100%);
         overflow: hidden;
       }
       button,
@@ -88,7 +90,7 @@
       }
       .sidebar {
         grid-row: 1/3;
-        background: #0a3764;
+        background: linear-gradient(180deg, #0a3764 0%, #0b4f86 58%, #126b6b 100%);
         color: #fff;
         display: flex;
         flex-direction: column;
@@ -109,9 +111,15 @@
         width: 34px;
         height: 34px;
         border-radius: 9px;
-        background: #fff;
-        color: var(--blue);
-        font-weight: 900;
+        background: #fff8d8;
+        border: 1px solid rgba(255, 224, 82, 0.75);
+        overflow: hidden;
+        padding: 2px;
+      }
+      .brand-mark img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
       .brand-text {
         min-width: 0;
@@ -392,7 +400,7 @@
         margin-bottom: 10px;
       }
       .kpi {
-        background: #fff;
+        background: linear-gradient(145deg, #fff 58%, #edf6ff 100%);
         border: 1px solid var(--line);
         border-left: 4px solid var(--blue);
         border-radius: 9px;
@@ -403,6 +411,27 @@
       }
       .kpi:hover {
         transform: translateY(-1px);
+      }
+      .kpi.warning {
+        border-left-color: var(--yellow);
+      }
+      .kpi.danger {
+        border-left-color: var(--red);
+      }
+      .kpi.success {
+        border-left-color: var(--green);
+      }
+      .kpi:nth-child(6n + 2) {
+        border-left-color: #7c3aed;
+        background: linear-gradient(145deg, #fff 58%, #f3edff 100%);
+      }
+      .kpi:nth-child(6n + 3) {
+        border-left-color: #e07a17;
+        background: linear-gradient(145deg, #fff 58%, #fff2e5 100%);
+      }
+      .kpi:nth-child(6n + 4) {
+        border-left-color: var(--green);
+        background: linear-gradient(145deg, #fff 58%, #eaf8f1 100%);
       }
       .kpi.warning {
         border-left-color: var(--yellow);
@@ -447,6 +476,7 @@
         gap: 8px;
         padding: 9px 12px;
         border-bottom: 1px solid var(--line);
+        background: linear-gradient(90deg, #f8fbff 0%, #fff 70%);
       }
       .card-head h2 {
         font-size: 14px;
@@ -941,16 +971,22 @@
         box-shadow: 0 24px 70px rgba(10, 55, 100, 0.18);
       }
       .activation-logo {
-        width: 58px;
-        height: 58px;
+        width: 78px;
+        height: 78px;
         margin: 0 auto 14px;
         display: grid;
         place-items: center;
-        border-radius: 16px;
-        background: linear-gradient(145deg, var(--blue), #0a3764);
-        color: #fff;
-        font-size: 28px;
-        font-weight: 900;
+        border-radius: 20px;
+        background: #fff8d8;
+        border: 1px solid #f6dc55;
+        box-shadow: 0 9px 24px rgba(201, 60, 60, 0.16);
+        overflow: hidden;
+        padding: 5px;
+      }
+      .activation-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
       .activation-card h1 {
         font-size: 21px;
@@ -1978,8 +2014,8 @@
       aria-labelledby="activationTitle"
     >
       <div class="activation-card">
-        <div class="activation-logo" aria-hidden="true">Đ</div>
-        <h1 id="activationTitle">TRỢ LÝ TỔNG PHỤ TRÁCH ĐỘI THCS</h1>
+        <div class="activation-logo"><img src="./assets/images/logo-doi.png" alt="Logo Đội Thiếu niên Tiền phong Hồ Chí Minh"></div>
+        <h1 id="activationTitle">TRỢ LÝ TỔNG PHỤ TRÁCH ĐỘI</h1>
         <p>Local-first trên thiết bị, đồng bộ riêng qua Google Drive khi đã cấu hình.</p>
         <form id="activationForm">
           <div class="field">
@@ -2022,9 +2058,9 @@
     <div class="app hidden" id="appShell">
       <aside class="sidebar" id="sidebar">
         <div class="brand">
-          <div class="brand-mark">Đ</div>
+          <div class="brand-mark"><img src="./assets/images/logo-doi.png" alt="Logo Đội"></div>
           <div class="brand-text">
-            <strong>TRỢ LÝ TỔNG PHỤ TRÁCH</strong><span>Công tác Đội THCS</span>
+            <strong>TRỢ LÝ TỔNG PHỤ TRÁCH</strong><span id="brandSchoolLevel">Tiểu học • THCS • Liên cấp</span>
           </div>
         </div>
         <nav class="nav" id="nav" aria-label="Điều hướng chính"></nav>
@@ -2135,14 +2171,14 @@
     />
     <script src="./assets/js/import-engine.js"></script>
     <script src="./assets/js/upgrade-features.js"></script>
-    <script src="./app-config.js"></script>
+    <script src="./app-config.js?v=20260901"></script>
     <script>
       "use strict";
       (() => {
         const PUBLIC_CONFIG = Object.freeze(window.TPT_APP_CONFIG || {});
         const APP = {
-          name: "Trợ lý Tổng phụ trách Đội THCS",
-          version: PUBLIC_CONFIG.APP_VERSION || "3.2.0",
+          name: "Trợ lý Tổng phụ trách Đội",
+          version: PUBLIC_CONFIG.APP_VERSION || "4.0.0",
           schema: Number(PUBLIC_CONFIG.SCHEMA_VERSION || 10),
           dbName: PUBLIC_CONFIG.DB_NAME || "TPT_DOI_THCS_DB",
           appId:
@@ -2151,8 +2187,8 @@
             PUBLIC_CONFIG.SCHOOL_PROFILE_ID || "thcs-thcs-profile-001",
           namespace:
             PUBLIC_CONFIG.APP_NAMESPACE || "tpt_thcs_thcs_profile_001",
-          schoolName: PUBLIC_CONFIG.SCHOOL_NAME || "THCS NGUYỄN THỊ ĐỊNH",
-          schoolLevel: PUBLIC_CONFIG.SCHOOL_LEVEL || "THCS",
+          schoolName: PUBLIC_CONFIG.SCHOOL_NAME || "TRƯỜNG (CHƯA CẤU HÌNH)",
+          schoolLevel: PUBLIC_CONFIG.SCHOOL_LEVEL || "LIEN_CAP",
           googleClientId: String(PUBLIC_CONFIG.GOOGLE_CLIENT_ID || "").trim(),
           expectedEmailHash: String(
             PUBLIC_CONFIG.EXPECTED_GOOGLE_EMAIL_SHA256 || "",
@@ -2166,7 +2202,7 @@
           basePath: String(PUBLIC_CONFIG.BASE_PATH || "./").trim() || "./",
           backupFormat: "TPT-BACKUP-3",
           driveFormat: "TPT-DRIVE-SYNC-1",
-          buildId: PUBLIC_CONFIG.BUILD_ID || "20260815-smart-import-v10",
+          buildId: PUBLIC_CONFIG.BUILD_ID || "20260901-tptd-stable-v4",
         };
         const STORES = [
           "profiles",
@@ -3254,6 +3290,8 @@
             this.abortController = null;
             this.started = false;
             this.remoteContext = null;
+            this.syncWarnings = [];
+            this.retryAttempt = 0;
             this.pendingPairingAssessment = false;
             this.pairingAssessmentPromise = null;
           }
@@ -3712,24 +3750,50 @@
               );
           }
           async readManifest(files) {
-            const file = files
+            const candidates = files
               .filter((item) => item.name === this.manifestName())
               .sort((a, b) =>
                 String(b.modifiedTime).localeCompare(String(a.modifiedTime)),
-              )[0];
-            if (!file) return { file: null, value: null };
-            const value = await this.downloadJson(file);
-            if (value.format !== APP.driveFormat)
-              throw new Error("Manifest Drive sai định dạng.");
-            this.validateIdentity(value, "Manifest Drive");
-            if (
-              value.drive_permission_id &&
-              value.drive_permission_id !== this.account.permissionId
-            )
-              throw new Error(
-                "Manifest Drive đã ghép với Gmail khác; đồng bộ bị chặn.",
               );
-            return { file, value };
+            if (!candidates.length) return { file: null, value: null };
+            let lastError = null;
+            for (const file of candidates) {
+              try {
+                const value = await this.downloadJson(file);
+                if (value.format !== APP.driveFormat)
+                  throw new Error("Manifest Drive sai định dạng.");
+                this.validateIdentity(value, "Manifest Drive");
+                if (
+                  value.drive_permission_id &&
+                  value.drive_permission_id !== this.account.permissionId
+                )
+                  throw new Error(
+                    "Manifest Drive đã ghép với Gmail khác; đồng bộ bị chặn.",
+                  );
+                if (lastError) {
+                  const warning =
+                    "Đã bỏ qua một manifest hỏng và dùng bản hợp lệ gần nhất.";
+                  if (!this.syncWarnings.includes(warning))
+                    this.syncWarnings.push(warning);
+                }
+                return { file, value };
+              } catch (error) {
+                lastError = error;
+                if (
+                  error.name === "AbortError" ||
+                  error.status === 401 ||
+                  error.retryable ||
+                  !navigator.onLine ||
+                  /Gmail khác|APP_ID|hồ sơ trường khác|namespace/.test(
+                    error.message,
+                  )
+                )
+                  throw error;
+              }
+            }
+            throw new Error(
+              `Không tìm được manifest Drive hợp lệ. ${lastError?.message || ""}`.trim(),
+            );
           }
           async localRecordCount() {
             let count = 0,
@@ -4433,28 +4497,148 @@
             for (const file of opsFiles) {
               const markerId = `remote-op:${file.id}`;
               if (await db.get("operation_journal", markerId)) continue;
-              const batch = await this.downloadJson(file);
-              this.validateIdentity(batch, `Nhật ký ${file.name}`);
-              const checksum = await sha256Text(stableJSON(batch.operations));
-              if (checksum !== batch.operations_checksum)
-                throw new Error(`Nhật ký ${file.name} sai checksum.`);
-              for (const operation of batch.operations || []) {
-                if (
-                  operation.device_id === DEVICE_ID &&
-                  ownOperationIds.has(operation.operation_id)
-                )
-                  continue;
-                if (
-                  !STORES.includes(operation.entity_type) ||
-                  SYNC_EXCLUDED_STORES.has(operation.entity_type)
-                )
-                  continue;
-                await this.applyIncomingRecord(
-                  operation.entity_type,
-                  operation.payload,
-                  file.id,
-                  operation.operation_id,
+              const quarantineId = `remote-quarantine:${file.id}:${file.version || file.modifiedTime || "0"}`;
+              if (await db.get("operation_journal", quarantineId)) continue;
+              let batch;
+              try {
+                batch = await this.downloadJson(file);
+                this.validateIdentity(batch, `Nhật ký ${file.name}`);
+                if (!Array.isArray(batch.operations) || !batch.batch_id)
+                  throw new Error(`Nhật ký ${file.name} thiếu cấu trúc bắt buộc.`);
+                const checksum = await sha256Text(
+                  stableJSON(batch.operations),
                 );
+                if (checksum !== batch.operations_checksum)
+                  throw new Error(`Nhật ký ${file.name} sai checksum.`);
+              } catch (error) {
+                if (
+                  error.name === "AbortError" ||
+                  error.status === 401 ||
+                  error.retryable ||
+                  !navigator.onLine ||
+                  /APP_ID|hồ sơ trường khác|namespace/.test(error.message)
+                )
+                  throw error;
+                await db.put(
+                  "operation_journal",
+                  {
+                    id: quarantineId,
+                    operation: "remote_batch_quarantined",
+                    source_file_id: file.id,
+                    source_file_name: file.name,
+                    source_file_version: file.version || "",
+                    status: "warning",
+                    error: error.message,
+                    completed_at: now(),
+                  },
+                  {
+                    audit: false,
+                    journal: false,
+                    preserveMetadata: true,
+                    sync: false,
+                    silent: true,
+                  },
+                );
+                this.syncWarnings.push(
+                  `Đã cách ly ${file.name}; các tệp hợp lệ khác vẫn tiếp tục đồng bộ.`,
+                );
+                continue;
+              }
+              const batchMarkerId = `remote-batch:${batch.batch_id}`;
+              if (await db.get("operation_journal", batchMarkerId)) continue;
+              let applied = 0,
+                skipped = 0,
+                deferred = 0;
+              for (const operation of batch.operations) {
+                try {
+                  if (
+                    operation.device_id === DEVICE_ID &&
+                    ownOperationIds.has(operation.operation_id)
+                  )
+                    continue;
+                  if (
+                    !operation.operation_id ||
+                    !operation.payload?.id ||
+                    !STORES.includes(operation.entity_type) ||
+                    SYNC_EXCLUDED_STORES.has(operation.entity_type)
+                  ) {
+                    skipped++;
+                    continue;
+                  }
+                  await this.applyIncomingRecord(
+                    operation.entity_type,
+                    operation.payload,
+                    file.id,
+                    operation.operation_id,
+                  );
+                  applied++;
+                } catch (error) {
+                  if (
+                    error.name === "AbortError" ||
+                    error.status === 401 ||
+                    error.retryable ||
+                    !navigator.onLine
+                  )
+                    throw error;
+                  skipped++;
+                  deferred++;
+                  const warning = `Một bản ghi trong ${file.name} chưa áp dụng được; ứng dụng sẽ tự thử lại mà không dừng các tệp khác.`;
+                  if (!this.syncWarnings.includes(warning))
+                    this.syncWarnings.push(warning);
+                  await db.put(
+                    "operation_journal",
+                    {
+                      id: `remote-item-warning:${operation.operation_id || uid()}`,
+                      operation: "remote_operation_quarantined",
+                      source_file_id: file.id,
+                      source_operation_id: operation.operation_id || "",
+                      status: "warning",
+                      error: error.message,
+                      completed_at: now(),
+                    },
+                    {
+                      audit: false,
+                      journal: false,
+                      preserveMetadata: true,
+                      sync: false,
+                      silent: true,
+                    },
+                  );
+                }
+              }
+              if (deferred) {
+                const retryId = `remote-batch-retry:${file.id}`,
+                  previousRetry = await db.get(
+                    "operation_journal",
+                    retryId,
+                  );
+                await db.put(
+                  "operation_journal",
+                  {
+                    ...(previousRetry || {}),
+                    id: retryId,
+                    operation: "remote_batch_pending_retry",
+                    source_file_id: file.id,
+                    source_file_name: file.name,
+                    batch_id: batch.batch_id,
+                    item_count: batch.operations.length,
+                    applied_count: applied,
+                    deferred_count: deferred,
+                    attempts: Number(previousRetry?.attempts || 0) + 1,
+                    status: "warning",
+                    error:
+                      "Có bản ghi chưa áp dụng được; phần hợp lệ đã xử lý và bản lỗi sẽ tự thử lại.",
+                    completed_at: now(),
+                  },
+                  {
+                    audit: false,
+                    journal: false,
+                    preserveMetadata: true,
+                    sync: false,
+                    silent: true,
+                  },
+                );
+                continue;
               }
               await db.put(
                 "operation_journal",
@@ -4463,8 +4647,29 @@
                   operation: "remote_batch_applied",
                   source_file_id: file.id,
                   source_file_name: file.name,
-                  item_count: (batch.operations || []).length,
-                  status: "completed",
+                  batch_id: batch.batch_id,
+                  item_count: batch.operations.length,
+                  applied_count: applied,
+                  skipped_count: skipped,
+                  status: skipped ? "completed_with_warnings" : "completed",
+                  completed_at: now(),
+                },
+                {
+                  audit: false,
+                  journal: false,
+                  preserveMetadata: true,
+                  sync: false,
+                  silent: true,
+                },
+              );
+              await db.put(
+                "operation_journal",
+                {
+                  id: batchMarkerId,
+                  operation: "remote_batch_id_applied",
+                  batch_id: batch.batch_id,
+                  source_file_id: file.id,
+                  status: skipped ? "completed_with_warnings" : "completed",
                   completed_at: now(),
                 },
                 {
@@ -4573,8 +4778,55 @@
                 operations_checksum: checksum,
                 operations,
               };
-            let file = files.find((item) => item.name === name);
-            if (!file)
+            // Có thể tồn tại tệp cùng tên nhưng nội dung bị hỏng do lần ghi
+            // trước bị gián đoạn. Không được dùng mù quáng tệp đó: kiểm tra
+            // trước, sai checksum thì ghi đè chính tệp cũ.
+            let file = files
+              .filter((item) => item.name === name)
+              .sort((a, b) =>
+                String(b.modifiedTime || b.createdTime || "").localeCompare(
+                  String(a.modifiedTime || a.createdTime || ""),
+                ),
+              )[0];
+            if (file) {
+              try {
+                const existing = await this.downloadJson(file),
+                  existingChecksum = await sha256Text(
+                    stableJSON(existing.operations),
+                  );
+                if (
+                  existing.batch_id === batchId &&
+                  existing.operations_checksum === checksum &&
+                  existingChecksum === checksum
+                ) {
+                  // Tệp đã đúng, giữ nguyên và tiếp tục xác nhận bên dưới.
+                } else {
+                  file = (
+                    await this.uploadJson(name, value, {
+                      fileId: file.id,
+                      kind: "ops",
+                      properties: {
+                        batchId,
+                        deviceId: DEVICE_ID,
+                        operationsChecksum: checksum,
+                      },
+                    })
+                  ).file;
+                }
+              } catch (error) {
+                file = (
+                  await this.uploadJson(name, value, {
+                    fileId: file.id,
+                    kind: "ops",
+                    properties: {
+                      batchId,
+                      deviceId: DEVICE_ID,
+                      operationsChecksum: checksum,
+                    },
+                  })
+                ).file;
+              }
+            } else {
               file = (
                 await this.uploadJson(name, value, {
                   kind: "ops",
@@ -4585,6 +4837,7 @@
                   },
                 })
               ).file;
+            }
             const verified = await this.downloadJson(file),
               verifiedChecksum = await sha256Text(
                 stableJSON(verified.operations),
@@ -4747,6 +5000,7 @@
             this.syncPromise = (async () => {
               this.abortController?.abort();
               this.abortController = new AbortController();
+              this.syncWarnings = [];
               this.setStatus("syncing", "Đang đồng bộ Google Drive");
               try {
                 let files = await this.listFiles();
@@ -4815,12 +5069,24 @@
                     `Chờ đồng bộ: ${pending} thay đổi`,
                     { pending, lastSyncedAt: stamp },
                   );
+                else if (this.syncWarnings.length)
+                  this.setStatus(
+                    "warning",
+                    `Đã đồng bộ phần dữ liệu hợp lệ • ${this.syncWarnings.length} cảnh báo đã được cách ly`,
+                    {
+                      pending: 0,
+                      lastSyncedAt: stamp,
+                      warningCount: this.syncWarnings.length,
+                    },
+                  );
                 else
                   this.setStatus(
                     "synced",
                     `Đã đồng bộ lúc ${new Date(stamp).toLocaleTimeString("vi-VN")}`,
                     { pending: 0, lastSyncedAt: stamp },
                   );
+                this.retryAttempt = 0;
+                if (pending && state.unlocked) this.schedule(2500);
                 return true;
               } catch (error) {
                 const pending = await this.updatePendingCount().catch(() => 0);
@@ -4844,11 +5110,27 @@
                     `Đồng bộ thất bại – thử lại: ${error.message}`,
                     { pending },
                   );
-                if (error.retryable && state.unlocked) {
+                const mustWaitForUser =
+                  error.name === "AbortError" ||
+                  error.status === 401 ||
+                  error.code === "DRIVE_CONTRACT_MISSING" ||
+                  !!this.identityBlockedMessage ||
+                  /Gmail khác|APP_ID|hồ sơ trường khác|namespace/.test(
+                    error.message,
+                  );
+                if (!mustWaitForUser && navigator.onLine && state.unlocked) {
+                  this.retryAttempt = Math.min(
+                    Number(this.retryAttempt || 0) + 1,
+                    7,
+                  );
+                  const retryDelay = Math.min(
+                    5 * 60 * 1000,
+                    10000 * 2 ** (this.retryAttempt - 1),
+                  );
                   clearTimeout(this.retryTimer);
                   this.retryTimer = setTimeout(
                     () => this.sync().catch(() => {}),
-                    30000 + Math.random() * 15000,
+                    retryDelay + Math.random() * 5000,
                   );
                 }
                 throw error;
@@ -4857,6 +5139,61 @@
               }
             })();
             return this.syncPromise;
+          }
+          async repairSync() {
+            if (tabCoordinator.readOnly)
+              throw new Error(
+                "Thiết bị này đang ở chế độ chỉ đọc vì có tab khác đang ghi dữ liệu.",
+              );
+            await createInternalSnapshot("Trước tự sửa đồng bộ", {
+              tier: "protected",
+              protectedSnapshot: true,
+              reason: "before-sync-repair",
+            });
+            let repaired = 0;
+            for (const row of await db.allIncludingDeleted("sync_outbox")) {
+              if (["synced", "cancelled"].includes(row.status)) continue;
+              const brokenState =
+                row.status === "error" ||
+                (row.status === "sending" && !row.batch_id);
+              if (!brokenState) continue;
+              await db.put(
+                "sync_outbox",
+                {
+                  ...row,
+                  status: "pending",
+                  batch_id: null,
+                  repaired_at: now(),
+                  last_error: "",
+                },
+                {
+                  audit: false,
+                  journal: false,
+                  preserveMetadata: true,
+                  sync: false,
+                  silent: true,
+                },
+              );
+              repaired++;
+            }
+            this.retryAttempt = 0;
+            clearTimeout(this.retryTimer);
+            const pending = await this.updatePendingCount();
+            await db.put(
+              "operation_journal",
+              {
+                operation: "sync_self_repair",
+                status: "completed",
+                repaired_outbox_rows: repaired,
+                pending_rows: pending,
+                completed_at: now(),
+              },
+              { audit: false, journal: false, sync: false },
+            );
+            if (this.hasToken() && this.isPaired() && navigator.onLine)
+              return this.sync({ manual: true });
+            this.schedule(100);
+            return false;
           }
           async resolveConflict(conflictId, choice, merged = null) {
             const conflict = await db.get("sync_conflicts", conflictId);
@@ -4993,6 +5330,19 @@
               await writable.abort?.();
               throw error;
             }
+            const written = await fileHandle.getFile();
+            if (written.size !== blob.size)
+              throw new Error(
+                "Tệp sao lưu ghi ra thư mục chưa đủ dung lượng; chưa ghi nhận hoàn tất.",
+              );
+            const [expectedHash, writtenHash] = await Promise.all([
+              sha256Blob(blob),
+              sha256Blob(written),
+            ]);
+            if (expectedHash !== writtenHash)
+              throw new Error(
+                "Tệp sao lưu vừa ghi không khớp checksum; chưa ghi nhận hoàn tất.",
+              );
             return true;
           }
         }
@@ -5040,8 +5390,7 @@
         const NAV = [
           ["dashboard", "⌂", "Tổng quan"],
           ["today", "◷", "Hôm nay"],
-          ["plans", "▤", "Kế hoạch"],
-          ["tasks", "✓", "Công việc và checklist"],
+          ["tasks", "✓", "Kế hoạch – công việc"],
           ["calendar", "▦", "Lịch hoạt động"],
           ["students", "♙", "Học sinh"],
           ["incidents", "⚠", "Vi phạm học sinh"],
@@ -5089,6 +5438,9 @@
                 "draft: Dự thảo|active: Đang thực hiện|finished: Đã kết thúc",
               ],
               ["progress", "Tiến độ (%)", "number"],
+              ["result", "Kết quả thực hiện", "textarea"],
+              ["evidence", "Minh chứng/đường dẫn liên quan", "textarea"],
+              ["notes", "Ghi chú điều chỉnh", "textarea"],
             ],
           },
           activities: {
@@ -5325,12 +5677,14 @@
               await ensureSeed();
               await migrateEnhancedData();
               await upgrade.migrateSmartImportData();
+              await migrateStableV4Data();
               await generateRecurringTasks();
               await ensureStorageProtection();
               await ensureScheduledSnapshots();
               await ensureScheduledDirectoryBackup();
             }
             await loadContext();
+            await ensureOnboardingState();
             renderNav();
             updateNetwork();
             window.addEventListener("online", updateNetwork);
@@ -5351,7 +5705,11 @@
           if (!location.hash)
             history.replaceState(null, "", `#${initialPage}`);
           await go(initialPage, false, true);
-          if (!tabCoordinator.readOnly && !(await setting("onboarded")))
+          if (
+            !tabCoordinator.readOnly &&
+            !(await setting("onboarded")) &&
+            !cloud.isConfigured()
+          )
             showOnboarding();
         }
         function registerPWA() {
@@ -5361,7 +5719,7 @@
           )
             return;
           navigator.serviceWorker
-            .register("./sw.js")
+            .register("./sw.js", { updateViaCache: "none" })
             .then((registration) => {
               registration.addEventListener("updatefound", () => {
                 const worker = registration.installing;
@@ -5396,11 +5754,20 @@
                 "Hãy lưu hoặc đóng bản nháp đang mở trước khi cập nhật.",
                 "bad",
               );
-            if (await cloud.updatePendingCount())
-              return toast(
-                "Còn thay đổi chưa đồng bộ. Hãy đồng bộ hoặc xuất sao lưu trước khi cập nhật.",
-                "bad",
+            const pending = await cloud.updatePendingCount();
+            if (pending) {
+              await createInternalSnapshot(
+                "Trước cập nhật PWA khi còn dữ liệu chờ đồng bộ",
+                {
+                  tier: "protected",
+                  protectedSnapshot: true,
+                  reason: "before-pwa-update-with-pending-sync",
+                },
               );
+              toast(
+                `Đã tạo điểm bảo vệ cho ${pending} thay đổi đang chờ; tiếp tục cập nhật an toàn.`,
+              );
+            }
             let reloaded = false;
             navigator.serviceWorker.addEventListener(
               "controllerchange",
@@ -5543,13 +5910,11 @@
             c2 = uid();
           await db.put("schools", {
             id: "school-main",
-            name:
-              APP.schoolName === "TRƯỜNG THCS"
-                ? "TRƯỜNG THCS (CHƯA CẤU HÌNH)"
-                : APP.schoolName,
+            name: APP.schoolName,
+            school_level: APP.schoolLevel,
             code: "",
             address: "",
-            is_sample: APP.schoolName === "TRƯỜNG THCS",
+            is_sample: /chưa cấu hình/i.test(APP.schoolName),
           });
           await db.bulkPut("campuses", [
             { id: c1, name: "Cơ sở 1", code: "CS1" },
@@ -5560,6 +5925,7 @@
             name: "2026–2027",
             start_date: "2026-08-15",
             end_date: "2027-05-31",
+            week_count: 40,
             is_current: true,
           });
           await db.bulkPut("semesters", [
@@ -5595,12 +5961,18 @@
           }
           await db.bulkPut("school_weeks", weeks);
           const classes = [];
+          const seedGrades =
+            APP.schoolLevel === "TH"
+              ? [1, 2, 3, 4, 5]
+              : APP.schoolLevel === "THCS"
+                ? [6, 7, 8, 9]
+                : [1, 2, 3, 4, 5, 6, 7, 8, 9];
           for (const [campus, prefix] of [
             [c1, "A"],
             [c2, "B"],
           ])
-            for (let g = 6; g <= 9; g++)
-              for (let n = 1; n <= 2; n++)
+            for (const g of seedGrades)
+              for (let n = 1; n <= 1; n++)
                 classes.push({
                   id: uid(),
                   school_year_id: yid,
@@ -5746,7 +6118,9 @@
               db.all(s),
             ),
           ),
-            weeks = sortWeeksAscending(rawWeeks);
+            weeks = sortWeeksAscending(
+              rawWeeks.filter((row) => row.active !== false),
+            );
           state.cache = { years, sems, weeks, campuses };
           state.yearId =
             state.yearId ||
@@ -5786,6 +6160,38 @@
             [["all", "Tất cả cơ sở"], ...campuses.map((x) => [x.id, x.name])],
             state.campusId,
           );
+        }
+        function schoolLevelLabel(value) {
+          return (
+            {
+              TH: "Tiểu học",
+              THCS: "Trung học cơ sở",
+              LIEN_CAP: "Liên cấp Tiểu học – THCS",
+            }[value] || "Tiểu học • THCS • Liên cấp"
+          );
+        }
+        async function ensureOnboardingState() {
+          const school = (await db.all("schools"))[0] || null,
+            meaningful = !!(
+              school?.name &&
+              !school.is_sample &&
+              !/chưa cấu hình/i.test(school.name)
+            );
+          if (meaningful && !(await setting("onboarded")))
+            await setting("onboarded", true);
+          updateBrandIdentity(school);
+          return meaningful;
+        }
+        function updateBrandIdentity(school) {
+          const level = schoolLevelLabel(
+            school?.school_level || APP.schoolLevel,
+          );
+          const subtitle = $("#brandSchoolLevel");
+          if (subtitle) subtitle.textContent = level;
+          const schoolName = String(school?.name || "").trim();
+          document.title = schoolName
+            ? `Trợ lý Tổng phụ trách Đội • ${schoolName}`
+            : "Trợ lý Tổng phụ trách Đội";
         }
         function fillSelect(el, items, value) {
           el.replaceChildren(
@@ -5844,6 +6250,7 @@
           );
         }
         async function go(page, focus = true, fromHistory = false) {
+          if (page === "plans") page = "tasks";
           if (!NAV.some(([id]) => id === page)) page = "dashboard";
           if (!fromHistory && location.hash !== `#${page}`)
             history.pushState(null, "", `#${page}`);
@@ -5854,7 +6261,6 @@
           const renderers = {
             dashboard: renderDashboard,
             today: renderToday,
-            plans: () => renderEntity("plans"),
             tasks: renderTasks,
             calendar: renderCalendar,
             students: () => upgrade.renderStudents(),
@@ -6083,12 +6489,14 @@
             ? "Toàn trường"
             : state.cache.campuses.find((x) => x.id === id)?.name || "—";
         async function renderDashboard() {
-          const [tasks, events, classes, sheets, entries] = await Promise.all([
+          const [tasks, events, classes, sheets, entries, students, teamUnits] = await Promise.all([
             scoped("tasks"),
             scoped("calendar_events"),
             scoped("classes"),
             scoped("weekly_score_sheets"),
             scoped("score_entries"),
+            scoped("students"),
+            scoped("team_units"),
           ]);
           const open = tasks.filter((x) => x.status !== "done"),
             dueToday = open.filter((x) => x.due_date === today()),
@@ -6112,7 +6520,24 @@
             progress = tasks.length
               ? Math.round((done / tasks.length) * 100)
               : 0,
-            lastBackup = await setting("last_backup_at");
+            lastBackup = await setting("last_backup_at"),
+            activeStudents = students.filter(
+              (row) => (row.status || "active") === "active",
+            ),
+            chiDoiCount =
+              teamUnits.filter((row) =>
+                normalizeText(row.type || row.name).includes("chi doi"),
+              ).length ||
+              new Set(
+                activeStudents
+                  .filter((row) =>
+                    ["doi_vien", "doan_vien"].includes(
+                      row.organization_status,
+                    ),
+                  )
+                  .map((row) => row.class_id)
+                  .filter(Boolean),
+              ).size;
           setContent(
             pageHead(
               "Tổng quan",
@@ -6127,6 +6552,14 @@
         <button class="kpi" data-go="calendar"><span class="num">${upcoming.length}</span><span class="label">Hoạt động sắp diễn ra</span></button>
         <button class="kpi warning" data-go="scores"><span class="num">${missing.length}</span><span class="label">Lớp chưa nhập thi đua</span></button>
         <button class="kpi success" data-go="scores"><span class="num">${sheet && ["approved", "locked"].includes(sheet.status) ? classes.length : 0}</span><span class="label">Lớp thuộc bảng đã duyệt</span></button>
+      </div>
+      <div class="kpi-grid mt">
+        <button class="kpi" data-go="students"><span class="num">${activeStudents.length}</span><span class="label">Học sinh đang học</span></button>
+        <button class="kpi" data-go="organization"><span class="num">${chiDoiCount}</span><span class="label">Chi đội đang theo dõi</span></button>
+        <button class="kpi warning" data-go="students"><span class="num">${activeStudents.filter((row) => row.organization_status === "nhi_dong").length}</span><span class="label">Nhi đồng</span></button>
+        <button class="kpi success" data-go="students"><span class="num">${activeStudents.filter((row) => row.organization_status === "doi_vien").length}</span><span class="label">Đội viên</span></button>
+        <button class="kpi" data-go="students"><span class="num">${activeStudents.filter((row) => row.organization_status === "doan_vien").length}</span><span class="label">Đoàn viên</span></button>
+        <button class="kpi danger" data-go="students"><span class="num">${activeStudents.filter((row) => String(row.policy_groups || "").trim() || !["", "none"].includes(row.difficulty_status || "none") || String(row.special_needs || "").trim()).length}</span><span class="label">Cần theo dõi/hỗ trợ</span></button>
       </div>
       <div class="grid-2">
         <div class="card"><div class="card-head"><h2>Việc cần xử lý</h2><span class="meta">${open.length} việc đang mở</span></div><div class="card-body"><ul class="compact-list">${
@@ -6316,6 +6749,8 @@
               ["level", "Cấp"],
               ["status", "Trạng thái"],
               ["progress", "Tiến độ"],
+              ["result", "Kết quả"],
+              ["evidence", "Minh chứng"],
             ],
             activities: [
               ["name", "Tên hoạt động"],
@@ -6474,6 +6909,25 @@
             data.custom_values = collectCustomValues(fd, customDefs);
             for (const [n, , type] of cfg.fields)
               if (type === "number") data[n] = Number(data[n] || 0);
+            if (
+              key === "plans" &&
+              data.start_date &&
+              data.end_date &&
+              data.end_date < data.start_date
+            )
+              return toast("Ngày kết thúc kế hoạch phải sau ngày bắt đầu.", "bad");
+            if (key === "plans") {
+              data.progress = clamp(data.progress, 0, 100);
+              if (data.status === "finished") {
+                if (!String(data.result || "").trim())
+                  return toast(
+                    "Hãy ghi kết quả trước khi kết thúc kế hoạch.",
+                    "bad",
+                  );
+                data.progress = 100;
+                data.completed_at ||= now();
+              }
+            }
             if (key === "equipment" && data.quantity < 0)
               return toast("Số lượng thiết bị không được âm.", "bad");
             if (key === "equipment") {
@@ -6543,7 +6997,10 @@
 
         async function renderTasks() {
           let rows = await scoped("tasks");
-          const configuredStatuses = await configItems("task_status"),
+          const plans = (await scoped("plans")).sort((a, b) =>
+              String(a.start_date || "").localeCompare(String(b.start_date || "")),
+            ),
+            configuredStatuses = await configItems("task_status"),
             configuredPriorities = await configItems("priority"),
             statusOptions = [
               ["todo", "Chưa làm"],
@@ -6572,18 +7029,37 @@
             rows = rows.filter(
               (x) => x.status !== "done" && x.due_date < today(),
             );
+          state.taskPlanMap = new Map(plans.map((plan) => [plan.id, plan]));
           setContent(
             pageHead(
-              "Công việc và checklist",
-              "Theo dõi đầu việc, hạn, phụ thuộc và tiến độ thực hiện.",
-              `<button class="btn" id="taskTemplates">Thư viện mẫu</button><button class="btn primary" id="newTask">＋ Công việc</button>`,
+              "Kế hoạch – công việc",
+              "Theo dõi kế hoạch, đầu việc, kết quả và minh chứng trong cùng một luồng.",
+              `<button class="btn" id="taskTemplates">Thư viện mẫu</button><button class="btn" id="newPlan">＋ Kế hoạch</button><button class="btn primary" id="newTask">＋ Công việc</button>`,
             ) +
               `
+      <div class="card mb"><div class="card-head"><h2>Kế hoạch đang theo dõi</h2><span class="meta">${plans.length} kế hoạch</span></div><div class="card-body"><div class="table-wrap" style="max-height:300px"><table><thead><tr><th>Kế hoạch</th><th>Thời gian</th><th>Trạng thái</th><th>Tiến độ</th><th>Công việc</th><th>Kết quả</th><th>Thao tác</th></tr></thead><tbody>${plans.map((plan) => { const linked = rows.filter((task) => task.plan_id === plan.id), completed = linked.filter((task) => task.status === "done").length; return `<tr><td class="wrap"><strong>${esc(plan.name)}</strong><br><small>${esc(plan.code || "Chưa có mã")}</small></td><td>${fmtDate(plan.start_date)} – ${fmtDate(plan.end_date)}</td><td>${statusBadge(plan.status)}</td><td>${clamp(plan.progress, 0, 100)}%</td><td>${completed}/${linked.length}</td><td class="wrap">${esc(plan.result || "Chưa cập nhật")}</td><td><button class="link-btn" data-edit-plan="${plan.id}">Sửa</button><button class="link-btn red" data-delete-plan="${plan.id}">Xóa</button></td></tr>`; }).join("") || '<tr><td colspan="7" class="empty">Chưa có kế hoạch. Chọn “＋ Kế hoạch” để tạo.</td></tr>'}</tbody></table></div></div></div>
       <div class="toolbar"><input class="grow" id="taskSearch" placeholder="Tìm công việc…"><select id="taskStatus"><option value="all">Mọi trạng thái</option>${statusOptions.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join("")}</select><select id="taskPriority"><option value="all">Mọi mức ưu tiên</option>${priorityOptions.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join("")}</select><div class="tabs" style="margin:0 0 0 auto;border:0"><button data-task-view="list" class="${state.taskView === "list" ? "active" : ""}">Danh sách</button><button data-task-view="kanban" class="${state.taskView === "kanban" ? "active" : ""}">Kanban</button></div></div><div id="taskArea"></div>`,
           );
           renderTaskArea(rows);
           $("#newTask").onclick = () => taskForm();
+          $("#newPlan").onclick = () => entityForm("plans");
           $("#taskTemplates").onclick = showTaskTemplates;
+          $$('[data-edit-plan]').forEach(
+            (button) =>
+              (button.onclick = () => entityForm("plans", button.dataset.editPlan)),
+          );
+          $$('[data-delete-plan]').forEach(
+            (button) =>
+              (button.onclick = () => {
+                const linked = rows.filter((task) => task.plan_id === button.dataset.deletePlan);
+                if (linked.length)
+                  return toast(
+                    `Kế hoạch đang liên kết ${linked.length} công việc. Hãy chuyển liên kết trước khi xóa.`,
+                    "bad",
+                  );
+                confirmDelete("plans", button.dataset.deletePlan, renderTasks);
+              }),
+          );
           $$("[data-task-view]").forEach(
             (b) =>
               (b.onclick = () => {
@@ -6635,7 +7111,7 @@
               state.taskPage * 100,
               state.taskPage * 100 + 100,
             );
-            area.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Công việc</th><th>Nhóm</th><th>Cơ sở</th><th>Hạn</th><th>Ưu tiên</th><th>Trạng thái</th><th>Tiến độ</th><th>Thao tác</th></tr></thead><tbody>${page.map((t) => `<tr><td class="wrap"><strong>${esc(t.title)}</strong>${t.obstacle ? `<br><small class="muted">Trở ngại: ${esc(t.obstacle)}</small>` : ""}</td><td>${esc(t.group || "—")}</td><td>${esc(campusName(t.campus_id))}</td><td>${t.status !== "done" && t.due_date < today() ? '<span class="badge red">Quá hạn</span> ' : ""}${fmtDate(t.due_date)}</td><td>${esc({ low: "Thấp", normal: "Bình thường", high: "Cao", urgent: "Khẩn" }[t.priority] || "—")}</td><td>${statusBadge(t.status)}</td><td style="min-width:120px"><div class="split"><div class="progress" style="width:80px"><span style="width:${clamp(t.progress, 0, 100)}%"></span></div><small>${clamp(t.progress, 0, 100)}%</small></div></td><td><button class="link-btn" data-edit-task="${t.id}">Sửa</button><button class="link-btn" data-clone-task="${t.id}">Nhân bản</button><button class="link-btn red" data-delete-task="${t.id}">Xóa</button></td></tr>`).join("") || '<tr><td colspan="8" class="empty">Không có công việc phù hợp bộ lọc.</td></tr>'}${rows.length > 100 ? `<tr><td colspan="8" class="center"><button class="btn small" id="taskPrev" ${state.taskPage === 0 ? "disabled" : ""}>‹ Trước</button> <span class="muted">Trang ${state.taskPage + 1}/${Math.ceil(rows.length / 100)} • 100 việc/trang</span> <button class="btn small" id="taskNext" ${state.taskPage + 1 >= Math.ceil(rows.length / 100) ? "disabled" : ""}>Sau ›</button></td></tr>` : ""}</tbody></table></div>`;
+            area.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Công việc</th><th>Kế hoạch</th><th>Nhóm</th><th>Cơ sở</th><th>Hạn</th><th>Trạng thái</th><th>Tiến độ</th><th>Kết quả/minh chứng</th><th>Thao tác</th></tr></thead><tbody>${page.map((t) => `<tr><td class="wrap"><strong>${esc(t.title)}</strong>${t.obstacle ? `<br><small class="muted">Trở ngại: ${esc(t.obstacle)}</small>` : ""}</td><td class="wrap">${esc(state.taskPlanMap?.get(t.plan_id)?.name || "Độc lập")}</td><td>${esc(t.group || "—")}</td><td>${esc(campusName(t.campus_id))}</td><td>${t.status !== "done" && t.due_date < today() ? '<span class="badge red">Quá hạn</span> ' : ""}${fmtDate(t.due_date)}</td><td>${statusBadge(t.status)}</td><td style="min-width:120px"><div class="split"><div class="progress" style="width:80px"><span style="width:${clamp(t.progress, 0, 100)}%"></span></div><small>${clamp(t.progress, 0, 100)}%</small></div></td><td class="wrap">${esc(t.result || t.notes || "Chưa cập nhật")}${t.evidence ? `<br><small>Minh chứng: ${esc(t.evidence)}</small>` : ""}</td><td><button class="link-btn" data-edit-task="${t.id}">Sửa</button><button class="link-btn" data-clone-task="${t.id}">Nhân bản</button><button class="link-btn red" data-delete-task="${t.id}">Xóa</button></td></tr>`).join("") || '<tr><td colspan="9" class="empty">Không có công việc phù hợp bộ lọc.</td></tr>'}${rows.length > 100 ? `<tr><td colspan="9" class="center"><button class="btn small" id="taskPrev" ${state.taskPage === 0 ? "disabled" : ""}>‹ Trước</button> <span class="muted">Trang ${state.taskPage + 1}/${Math.ceil(rows.length / 100)} • 100 việc/trang</span> <button class="btn small" id="taskNext" ${state.taskPage + 1 >= Math.ceil(rows.length / 100) ? "disabled" : ""}>Sau ›</button></td></tr>` : ""}</tbody></table></div>`;
             if ($("#taskPrev"))
               $("#taskPrev").onclick = () => {
                 state.taskPage--;
@@ -6684,13 +7160,16 @@
               };
           const checks = await db.all("task_check_items"),
             mine = checks.filter((x) => x.task_id === id),
+            plans = (await scoped("plans")).sort((a, b) =>
+              String(a.start_date || "").localeCompare(String(b.start_date || "")),
+            ),
             customDefs = await customFieldDefs("tasks"),
             groups = await configItems("task_group"),
             statuses = await configItems("task_status"),
             priorities = await configItems("priority");
           openModal(
             id ? "Cập nhật công việc" : "Thêm công việc",
-            `<form id="taskForm"><div class="form-grid"><div class="field full"><label class="required">Tiêu đề</label><input name="title" value="${esc(t.title || "")}" required maxlength="200"></div><div class="field"><label>Nhóm nghiệp vụ</label><select name="group"><option value="">— Chọn —</option>${groups.map((x) => `<option value="${esc(x.label)}" ${t.group === x.label ? "selected" : ""}>${esc(x.label)}</option>`).join("")}</select></div><div class="field"><label>Cơ sở</label><select name="campus_id"><option value="all">Toàn trường</option>${state.cache.campuses.map((c) => `<option value="${c.id}" ${t.campus_id === c.id ? "selected" : ""}>${esc(c.name)}</option>`).join("")}</select></div><div class="field"><label>Ngày bắt đầu</label><input type="date" name="start_date" value="${esc(t.start_date || "")}"></div><div class="field"><label class="required">Hạn hoàn thành</label><input type="date" name="due_date" value="${esc(t.due_date || "")}" required></div><div class="field"><label>Ưu tiên</label><select name="priority">${[
+            `<form id="taskForm"><div class="form-grid"><div class="field full"><label class="required">Tiêu đề</label><input name="title" value="${esc(t.title || "")}" required maxlength="200"></div><div class="field full"><label>Thuộc kế hoạch</label><select name="plan_id"><option value="">Công việc độc lập</option>${plans.map((plan) => `<option value="${plan.id}" ${t.plan_id === plan.id ? "selected" : ""}>${esc(plan.name)}</option>`).join("")}</select></div><div class="field"><label>Nhóm nghiệp vụ</label><select name="group"><option value="">— Chọn —</option>${groups.map((x) => `<option value="${esc(x.label)}" ${t.group === x.label ? "selected" : ""}>${esc(x.label)}</option>`).join("")}</select></div><div class="field"><label>Cơ sở</label><select name="campus_id"><option value="all">Toàn trường</option>${state.cache.campuses.map((c) => `<option value="${c.id}" ${t.campus_id === c.id ? "selected" : ""}>${esc(c.name)}</option>`).join("")}</select></div><div class="field"><label>Ngày bắt đầu</label><input type="date" name="start_date" value="${esc(t.start_date || "")}"></div><div class="field"><label class="required">Hạn hoàn thành</label><input type="date" name="due_date" value="${esc(t.due_date || "")}" required></div><div class="field"><label>Ưu tiên</label><select name="priority">${[
               ["low", "Thấp"],
               ["normal", "Bình thường"],
               ["high", "Cao"],
@@ -6730,7 +7209,7 @@
               )
               .join(
                 "",
-              )}</select></div><div class="field"><label>Kết thúc lặp (tùy chọn)</label><input type="date" name="repeat_until" value="${esc(t.repeat_until || "")}"></div><div class="field full"><label>Checklist con (mỗi dòng một mục; thêm ! ở đầu nếu bắt buộc)</label><textarea name="checklist">${esc(mine.map((x) => (x.required ? "! " : "") + x.label).join("\n"))}</textarea></div><div class="field"><label>Trở ngại</label><textarea name="obstacle">${esc(t.obstacle || "")}</textarea></div><div class="field"><label>Ghi chú/kết quả</label><textarea name="notes">${esc(t.notes || "")}</textarea></div>${renderCustomInputs(customDefs, t.custom_values)}</div></form>`,
+              )}</select></div><div class="field"><label>Kết thúc lặp (tùy chọn)</label><input type="date" name="repeat_until" value="${esc(t.repeat_until || "")}"></div><div class="field full"><label>Checklist con (mỗi dòng một mục; thêm ! ở đầu nếu bắt buộc)</label><textarea name="checklist">${esc(mine.map((x) => (x.required ? "! " : "") + x.label).join("\n"))}</textarea></div><div class="field"><label>Trở ngại</label><textarea name="obstacle">${esc(t.obstacle || "")}</textarea></div><div class="field"><label>Ngày hoàn thành thực tế</label><input type="date" name="completion_date" value="${esc(t.completion_date || "")}"></div><div class="field full"><label>Kết quả thực hiện</label><textarea name="result" maxlength="3000">${esc(t.result || "")}</textarea></div><div class="field full"><label>Minh chứng/đường dẫn liên quan</label><textarea name="evidence" maxlength="2000">${esc(t.evidence || "")}</textarea></div><div class="field full"><label>Ghi chú điều chỉnh</label><textarea name="notes">${esc(t.notes || "")}</textarea></div>${renderCustomInputs(customDefs, t.custom_values)}</div></form>`,
             `<button class="btn" id="cancelTask">Hủy</button><button class="btn primary" id="saveTask">Lưu công việc</button>`,
             true,
           );
@@ -6755,8 +7234,17 @@
                 "Chưa thể hoàn thành vì còn checklist bắt buộc chưa xong.",
                 "bad",
               );
+            if (d.status === "done" && !String(d.result || "").trim())
+              return toast(
+                "Hãy ghi kết quả thực hiện trước khi đánh dấu hoàn thành.",
+                "bad",
+              );
             delete d.checklist;
             d.progress = clamp(d.progress, 0, 100);
+            if (d.status === "done") {
+              d.progress = 100;
+              d.completion_date ||= today();
+            }
             d.repeat_rule = d.repeat_rule || "none";
             if (d.repeat_rule === "none") {
               d.repeat_next_at = null;
@@ -7071,7 +7559,7 @@
               '<div class="empty">Chưa khởi tạo bảng tuần. Chọn “Khởi tạo bảng tuần” để bắt đầu nhập.</div>');
           const map = entryMap(ctx.entries),
             locked = ctx.sheet.status === "locked";
-          area.innerHTML = `<div class="score-wrap"><table class="score-table"><thead><tr><th style="min-width:110px">Lớp</th>${ctx.criteria.map((c) => `<th title="${esc(c.name)}">${esc(c.code)}<br><small>${esc(c.group)}</small></th>`).join("")}<th>Tổng</th><th>Trạng thái</th></tr></thead><tbody>${ctx.classes
+          area.innerHTML = `<div class="score-wrap"><table class="score-table"><thead><tr><th style="min-width:110px">Lớp</th>${ctx.criteria.map((c) => `<th title="${esc(c.name)}">${esc(c.code)}<br><small>${esc(c.group)}</small></th>`).join("")}<th>Tổng</th><th style="min-width:240px">Ghi chú đối chiếu</th><th>Trạng thái</th></tr></thead><tbody>${ctx.classes
             .map((cl, ri) => {
               let total =
                   ctx.set.formula === "base"
@@ -7094,7 +7582,7 @@
                   return `<td><input class="score-input ${e ? "" : "missing"}" data-row="${ri}" data-col="${ci}" data-class="${cl.id}" data-criterion="${c.id}" data-entry="${e?.id || ""}" value="${esc(v)}" ${locked ? "disabled" : ""} aria-label="${esc(cl.class_name)} - ${esc(c.name)}"></td>`;
                 })
                 .join("");
-              return `<tr><td><strong>${esc(cl.class_name)}</strong><br><small>${esc(campusName(cl.campus_id))}</small></td>${cells}<td class="score-total" data-total="${cl.id}">${total.toFixed(1)}</td><td>${filled === ctx.criteria.length ? '<span class="badge green">Đủ</span>' : `<span class="badge yellow">${filled}/${ctx.criteria.length}</span>`}</td></tr>`;
+              return `<tr><td><strong>${esc(cl.class_name)}</strong><br><small>${esc(campusName(cl.campus_id))}</small></td>${cells}<td class="score-total" data-total="${cl.id}">${total.toFixed(1)}</td><td><div class="split"><input class="score-class-note" data-class-note="${cl.id}" value="${esc(ctx.sheet.class_notes?.[cl.id] || "")}" placeholder="Ghi lỗi, nội dung cần đối chiếu…" ${locked ? "disabled" : ""}><button class="btn small" data-save-score-note="${cl.id}" ${locked ? "disabled" : ""}>Lưu</button></div></td><td>${filled === ctx.criteria.length ? '<span class="badge green">Đủ</span>' : `<span class="badge yellow">${filled}/${ctx.criteria.length}</span>`}</td></tr>`;
             })
             .join(
               "",
@@ -7104,6 +7592,37 @@
             i.addEventListener("keydown", scoreKeyNav);
             i.addEventListener("paste", scorePaste);
           });
+          $$('[data-save-score-note]').forEach(
+            (button) =>
+              (button.onclick = () =>
+                saveScoreClassNote(ctx, button.dataset.saveScoreNote)),
+          );
+        }
+        async function saveScoreClassNote(ctx, classId) {
+          const input = document.querySelector(
+            `.score-class-note[data-class-note="${CSS.escape(classId)}"]`,
+          );
+          if (!input || !ctx.sheet || ctx.sheet.status === "locked") return;
+          const oldValue = ctx.sheet.class_notes?.[classId] || "",
+            newValue = input.value.trim();
+          if (oldValue === newValue) return toast("Ghi chú không thay đổi.");
+          const saved = await db.put("weekly_score_sheets", {
+            ...ctx.sheet,
+            class_notes: {
+              ...(ctx.sheet.class_notes || {}),
+              [classId]: newValue,
+            },
+          });
+          await db.put("audit_logs", {
+            action: "score_class_note_update",
+            entity: "weekly_score_sheets",
+            entity_id: saved.id,
+            summary: `Ghi chú đối chiếu lớp ${classId}`,
+            old_value: oldValue,
+            new_value: newValue,
+            reason: "Giáo viên lưu trực tiếp trên bảng thi đua",
+          });
+          toast("Đã lưu ghi chú lớp.");
         }
         async function saveScoreCell(ev) {
           const i = ev.currentTarget,
@@ -7441,6 +7960,119 @@
           });
           return ranked;
         }
+        async function calculateAggregateRanking(scope = "week") {
+          if (scope === "week") return calculateRanking(true);
+          const weeks = state.cache.weeks || [],
+            currentWeek = weeks.find((week) => week.id === state.weekId),
+            currentSemester =
+              (state.semesterId !== "all"
+                ? state.cache.sems.find(
+                    (semester) => semester.id === state.semesterId,
+                  )
+                : null) ||
+              state.cache.sems.find(
+                (semester) =>
+                  currentWeek &&
+                  currentWeek.start_date >= semester.start_date &&
+                  currentWeek.start_date <= semester.end_date,
+              ),
+            targetWeeks = weeks.filter((week) => {
+              if (week.active === false) return false;
+              if (scope === "year") return true;
+              if (scope === "month")
+                return (
+                  !!currentWeek &&
+                  String(week.start_date).slice(0, 7) ===
+                    String(currentWeek.start_date).slice(0, 7)
+                );
+              if (scope === "semester")
+                return (
+                  !!currentSemester &&
+                  week.start_date >= currentSemester.start_date &&
+                  week.start_date <= currentSemester.end_date
+                );
+              return week.id === state.weekId;
+            }),
+            weekIds = new Set(targetWeeks.map((week) => week.id)),
+            sheets = (await scoped("weekly_score_sheets")).filter(
+              (sheet) =>
+                weekIds.has(sheet.week_id) &&
+                ["approved", "locked"].includes(sheet.status),
+            ),
+            sheetIds = new Set(sheets.map((sheet) => sheet.id)),
+            entries = (await scoped("score_entries")).filter((entry) =>
+              sheetIds.has(entry.sheet_id),
+            ),
+            criteria = await db.all("criteria"),
+            sets = await db.all("criteria_sets"),
+            classes = (await scoped("classes")).filter(
+              (row) => row.active !== false,
+            ),
+            totals = new Map(
+              classes.map((row) => [
+                row.id,
+                {
+                  id: row.id,
+                  class_name: row.class_name,
+                  campus_id: row.campus_id,
+                  raw_total: 0,
+                  period_count: 0,
+                },
+              ]),
+            );
+          for (const sheet of sheets) {
+            const set = sets.find((row) => row.id === sheet.criteria_set_id),
+              setCriteria = criteria.filter(
+                (row) =>
+                  row.criteria_set_id === sheet.criteria_set_id &&
+                  row.active !== false,
+              ),
+              byClass = new Map();
+            for (const entry of entries.filter(
+              (row) => row.sheet_id === sheet.id,
+            )) {
+              if (!byClass.has(entry.class_id)) byClass.set(entry.class_id, []);
+              byClass.get(entry.class_id).push(entry);
+            }
+            for (const [classId, classEntries] of byClass) {
+              const aggregate = totals.get(classId);
+              if (!aggregate || !classEntries.length) continue;
+              let score =
+                set?.formula === "base" ? Number(set.base_score || 0) : 0;
+              for (const entry of classEntries) {
+                const criterion = setCriteria.find(
+                  (row) => row.id === entry.criteria_id,
+                );
+                if (criterion && entry.entry_state === "value")
+                  score += criterionScore(entry, criterion, set);
+              }
+              aggregate.raw_total += score;
+              aggregate.period_count++;
+            }
+          }
+          const ranked = [...totals.values()]
+            .filter((row) => row.period_count)
+            .map((row) => ({
+              ...row,
+              total: row.raw_total / row.period_count,
+              complete: true,
+            }))
+            .sort(
+              (a, b) =>
+                b.total - a.total ||
+                b.raw_total - a.raw_total ||
+                a.class_name.localeCompare(b.class_name, "vi", {
+                  numeric: true,
+                }),
+            );
+          ranked.forEach((row, index) => {
+            row.rank =
+              index > 0 && row.total === ranked[index - 1].total
+                ? ranked[index - 1].rank
+                : index + 1;
+          });
+          return ranked;
+        }
         async function renderScoreRanking(ctx) {
           const area = $("#scoreArea"),
             official = ["approved", "locked"].includes(ctx.sheet?.status),
@@ -7506,6 +8138,8 @@
             commendations = await scoped("commendations"),
             documents = await scoped("documents"),
             equipment = await scoped("equipment"),
+            students = await scoped("students"),
+            teamUnits = await scoped("team_units"),
             rank = await calculateRanking(true),
             classes = await scoped("classes"),
             ctx = await scoreContext(),
@@ -7522,6 +8156,8 @@
             commendations,
             documents,
             equipment,
+            students,
+            teamUnits,
             rank,
             classes,
             ctx,
@@ -7559,7 +8195,7 @@
           );
           $("#reportType").insertAdjacentHTML(
             "beforeend",
-            '<option value="scores_month">Thi đua tháng</option><option value="scores_semester">Thi đua học kỳ</option><option value="scores_year">Thi đua năm học</option><option value="ranking">Xếp hạng lớp</option><option value="incidents">Vi phạm học sinh</option><option value="plans">Kế hoạch</option><option value="organization">Tổ chức Liên đội</option><option value="programs">Rèn luyện – phong trào</option><option value="commendations">Khen thưởng</option><option value="documents">Hồ sơ – minh chứng</option><option value="summary">Báo cáo tổng hợp</option>',
+            '<option value="workplan">Kế hoạch – công việc – kết quả</option><option value="scores_month">Thi đua tháng</option><option value="scores_semester">Thi đua học kỳ</option><option value="scores_year">Thi đua năm học</option><option value="ranking">Xếp hạng lớp</option><option value="students">Học sinh – tổ chức – chính sách</option><option value="incidents">Vi phạm học sinh</option><option value="plans">Kế hoạch</option><option value="organization">Tổ chức Liên đội</option><option value="programs">Rèn luyện – phong trào</option><option value="commendations">Khen thưởng</option><option value="documents">Hồ sơ – minh chứng</option><option value="summary">Báo cáo tổng hợp</option>',
           );
           $(".page-actions").insertAdjacentHTML(
             "beforeend",
@@ -7582,12 +8218,20 @@
               $("#reportType").value,
               await reportData(),
             ));
-          $("#exportReportCsv").onclick = () =>
-            exportReportCSV($("#reportType").value, d);
-          $("#exportReportXlsx").onclick = () =>
-            exportReportStructured($("#reportType").value, d, "xlsx");
-          $("#exportReportWord").onclick = () =>
-            exportReportStructured($("#reportType").value, d, "word");
+          $("#exportReportCsv").onclick = async () =>
+            exportReportCSV($("#reportType").value, await reportData());
+          $("#exportReportXlsx").onclick = async () =>
+            exportReportStructured(
+              $("#reportType").value,
+              await reportData(),
+              "xlsx",
+            );
+          $("#exportReportWord").onclick = async () =>
+            exportReportStructured(
+              $("#reportType").value,
+              await reportData(),
+              "word",
+            );
           $("#exportReportPackage").onclick = () =>
             exportFinalizedReportPackage(state.yearId);
           $("#reportPaper").value = document.body.dataset.paper || "landscape";
@@ -7658,6 +8302,8 @@
               commendations: data.commendations,
               documents: data.documents,
               equipment: data.equipment,
+              students: data.students,
+              team_units: data.teamUnits,
             },
             sourceChecksum = await sha256Text(stableJSON(source)),
             existing = (await db.all("generated_reports")).filter(
@@ -7691,7 +8337,9 @@
               data.programs.length +
               data.commendations.length +
               data.documents.length +
-              data.equipment.length,
+              data.equipment.length +
+              data.students.length +
+              data.teamUnits.length,
             config_snapshot: {
               criteria_set_id: data.ctx?.set?.id || null,
               criteria_set_version: data.ctx?.set?.version || null,
@@ -7867,6 +8515,32 @@
             `Đã tạo gói ${reports.length} báo cáo chốt và ${files.length} tệp.`,
           );
         }
+        function studentOrganizationLabel(value) {
+          return (
+            {
+              nhi_dong: "Nhi đồng",
+              du_bi: "Dự bị đội viên",
+              du_bi_doi_vien: "Dự bị đội viên",
+              doi_vien: "Đội viên",
+              doan_vien: "Đoàn viên",
+              chua_xac_dinh: "Chưa xác định",
+            }[String(value || "").toLowerCase()] ||
+            value ||
+            "Chưa cập nhật"
+          );
+        }
+        function studentDifficultyLabel(value) {
+          return (
+            {
+              none: "Không",
+              monitor: "Cần theo dõi",
+              support: "Cần hỗ trợ",
+              urgent: "Cần hỗ trợ khẩn",
+            }[String(value || "").toLowerCase()] ||
+            value ||
+            "Chưa cập nhật"
+          );
+        }
         async function reportHTML(type, d) {
           const title = {
             week: "BÁO CÁO CÔNG TÁC TUẦN",
@@ -7876,7 +8550,9 @@
             scores_year: "TỔNG HỢP THI ĐUA NĂM HỌC",
             ranking: "XẾP HẠNG LỚP",
             tasks: "BÁO CÁO TIẾN ĐỘ CÔNG VIỆC",
+            workplan: "KẾ HOẠCH – CÔNG VIỆC – KẾT QUẢ THỰC HIỆN",
             activities: "BÁO CÁO HOẠT ĐỘNG ĐỘI",
+            students: "HỌC SINH – TỔ CHỨC – CHÍNH SÁCH – HỖ TRỢ",
             incidents: "TỔNG HỢP VI PHẠM HỌC SINH",
             plans: "TỔNG HỢP KẾ HOẠCH",
             organization: "TỔ CHỨC LIÊN ĐỘI",
@@ -7903,30 +8579,104 @@
                 x.location || "Chưa cập nhật",
               ]),
             )}<h3>III. Kế hoạch tuần sau</h3><p class="muted">Phần nhận xét/kế hoạch có thể bổ sung khi in; hệ thống không tự tạo số liệu ngoài dữ liệu nguồn.</p>`;
-          if (["scores", "scores_month", "scores_semester", "scores_year", "ranking"].includes(type))
-            body = !["approved", "locked"].includes(d.ctx.sheet?.status)
+          if (["scores", "scores_month", "scores_semester", "scores_year", "ranking"].includes(type)) {
+            const rankingScope =
+                {
+                  scores_month: "month",
+                  scores_semester: "semester",
+                  scores_year: "year",
+                }[type] || "week",
+              scopedRanking = await calculateAggregateRanking(rankingScope);
+            body =
+              rankingScope === "week" &&
+              !["approved", "locked"].includes(d.ctx.sheet?.status)
               ? '<div class="notice warn">Bảng tuần chưa được duyệt nên chưa có xếp hạng chính thức.</div>'
               : simpleTable(
-                  ["Hạng", "Lớp", "Cơ sở", "Tổng điểm"],
-                  d.rank.map((x) => [
+                  rankingScope === "week"
+                    ? ["Hạng", "Lớp", "Cơ sở", "Tổng điểm"]
+                    : [
+                        "Hạng",
+                        "Lớp",
+                        "Cơ sở",
+                        "Số tuần đã duyệt",
+                        "Điểm trung bình",
+                        "Tổng điểm",
+                      ],
+                  scopedRanking.map((x) => [
                     x.rank,
                     x.class_name,
                     campusName(x.campus_id),
-                    x.total.toFixed(1),
+                    ...(rankingScope === "week"
+                      ? [x.total.toFixed(1)]
+                      : [
+                          x.period_count,
+                          x.total.toFixed(2),
+                          x.raw_total.toFixed(1),
+                        ]),
                   ]),
                 );
+          }
           if (type === "tasks")
             body = simpleTable(
-              ["Công việc", "Nhóm", "Cơ sở", "Hạn", "Trạng thái", "Tiến độ"],
+              [
+                "Công việc",
+                "Kế hoạch",
+                "Hạn",
+                "Trạng thái",
+                "Tiến độ",
+                "Kết quả",
+                "Minh chứng",
+              ],
               d.tasks.map((x) => [
                 x.title,
-                x.group || "",
-                campusName(x.campus_id),
+                d.plans.find((plan) => plan.id === x.plan_id)?.name || "—",
                 fmtDate(x.due_date),
                 statusLabel(x.status),
                 (x.progress || 0) + "%",
+                x.result || "—",
+                x.evidence || "—",
               ]),
             );
+          if (type === "workplan")
+            body = `<h3>I. Kế hoạch và kết quả</h3>${simpleTable(
+              [
+                "Mã",
+                "Kế hoạch",
+                "Thời gian",
+                "Trạng thái",
+                "Tiến độ",
+                "Kết quả",
+                "Minh chứng",
+              ],
+              d.plans.map((x) => [
+                x.code || "—",
+                x.name,
+                `${fmtDate(x.start_date)} – ${fmtDate(x.end_date)}`,
+                statusLabel(x.status),
+                `${Number(x.progress || 0)}%`,
+                x.result || "—",
+                x.evidence || "—",
+              ]),
+            )}<h3>II. Công việc thực hiện</h3>${simpleTable(
+              [
+                "Công việc",
+                "Thuộc kế hoạch",
+                "Hạn",
+                "Trạng thái",
+                "Tiến độ",
+                "Kết quả",
+                "Minh chứng",
+              ],
+              d.tasks.map((x) => [
+                x.title,
+                d.plans.find((plan) => plan.id === x.plan_id)?.name || "—",
+                fmtDate(x.due_date),
+                statusLabel(x.status),
+                `${Number(x.progress || 0)}%`,
+                x.result || "—",
+                x.evidence || "—",
+              ]),
+            )}`;
           if (type === "activities")
             body = simpleTable(
               ["Hoạt động", "Nhóm", "Ngày", "Địa điểm", "Trạng thái"],
@@ -7945,9 +8695,50 @@
             );
           if (type === "plans")
             body = simpleTable(
-              ["Mã", "Kế hoạch", "Cấp", "Bắt đầu", "Kết thúc", "Trạng thái"],
-              d.plans.map((x) => [x.code, x.name, x.level, x.start_date, x.end_date, statusLabel(x.status)]),
+              [
+                "Mã",
+                "Kế hoạch",
+                "Bắt đầu",
+                "Kết thúc",
+                "Trạng thái",
+                "Tiến độ",
+                "Kết quả",
+                "Minh chứng",
+              ],
+              d.plans.map((x) => [
+                x.code,
+                x.name,
+                x.start_date,
+                x.end_date,
+                statusLabel(x.status),
+                `${Number(x.progress || 0)}%`,
+                x.result || "—",
+                x.evidence || "—",
+              ]),
             );
+          if (type === "students")
+            body = `<div class="metric-row"><div class="metric"><strong>${d.students.length}</strong><span>Học sinh</span></div><div class="metric"><strong>${d.teamUnits.filter((unit) => /chi đội/i.test(unit.type || unit.name || "")).length}</strong><span>Chi đội</span></div><div class="metric"><strong>${d.students.filter((student) => String(student.organization_status).toLowerCase() === "nhi_dong").length}</strong><span>Nhi đồng</span></div><div class="metric"><strong>${d.students.filter((student) => String(student.organization_status).toLowerCase() === "doi_vien").length}</strong><span>Đội viên</span></div><div class="metric"><strong>${d.students.filter((student) => String(student.organization_status).toLowerCase() === "doan_vien").length}</strong><span>Đoàn viên</span></div></div>${simpleTable(
+              [
+                "Mã HS",
+                "Họ tên",
+                "Lớp",
+                "Tình trạng tổ chức",
+                "Diện chính sách",
+                "Hoàn cảnh/hỗ trợ",
+                "Nhu cầu đặc biệt",
+                "Ghi chú hỗ trợ",
+              ],
+              d.students.map((student) => [
+                student.student_code || student.code || "",
+                student.full_name || student.name || "",
+                student.class_name || student.class_code || "",
+                studentOrganizationLabel(student.organization_status),
+                student.policy_groups || "—",
+                studentDifficultyLabel(student.difficulty_status),
+                student.special_needs || "—",
+                student.support_notes || "—",
+              ]),
+            )}`;
           if (type === "organization")
             body = simpleTable(
               ["Họ tên", "Lớp", "Đội/ban", "Chức vụ", "Nhiệm kỳ"],
@@ -7981,8 +8772,8 @@
             );
           }
           if (type === "summary")
-            body = `<div class="metric-row"><div class="metric"><strong>${d.tasks.length}</strong><span>Công việc</span></div><div class="metric"><strong>${d.activities.length}</strong><span>Hoạt động</span></div><div class="metric"><strong>${d.incidents.length}</strong><span>Vi phạm</span></div><div class="metric"><strong>${d.commendations.length}</strong><span>Khen thưởng</span></div><div class="metric"><strong>${d.documents.length}</strong><span>Hồ sơ</span></div></div><h3>I. Tiến độ công việc</h3><p>Hoàn thành ${d.completed.length}/${d.tasks.length}; quá hạn ${d.overdue.length}.</p><h3>II. Hoạt động và phong trào</h3><p>${d.activities.length} hoạt động; ${d.programs.length} kết quả rèn luyện/phong trào.</p><h3>III. Thi đua và nề nếp</h3><p>${d.rank.length} lớp có dữ liệu xếp hạng; ${d.incidents.length} ghi nhận vi phạm.</p>`;
-          return `<div class="center"><small>${esc(d.school?.name || "TRƯỜNG THCS")}</small><h2 style="margin:8px 0">${title}</h2><p>${esc(d.week?.name || "")} • ${esc(campusName(state.campusId))}</p></div><div class="split"><small>Tạo lúc: ${fmtDateTime(now())}</small><small>Phạm vi dữ liệu: ${esc(d.week?.name || "Năm học")} / ${esc(campusName(state.campusId))}</small></div><hr style="border:0;border-top:1px solid var(--line)">${body}<div style="display:grid;grid-template-columns:1fr 1fr;text-align:center;margin-top:35px"><div><strong>Người lập báo cáo</strong></div><div><strong>Xác nhận của nhà trường</strong></div></div>`;
+            body = `<div class="metric-row"><div class="metric"><strong>${d.students.length}</strong><span>Học sinh</span></div><div class="metric"><strong>${d.tasks.length}</strong><span>Công việc</span></div><div class="metric"><strong>${d.activities.length}</strong><span>Hoạt động</span></div><div class="metric"><strong>${d.incidents.length}</strong><span>Vi phạm</span></div><div class="metric"><strong>${d.documents.length}</strong><span>Hồ sơ</span></div></div><h3>I. Tiến độ kế hoạch – công việc</h3><p>${d.plans.length} kế hoạch; hoàn thành ${d.completed.length}/${d.tasks.length} công việc; quá hạn ${d.overdue.length}.</p><h3>II. Hoạt động và phong trào</h3><p>${d.activities.length} hoạt động; ${d.programs.length} kết quả rèn luyện/phong trào.</p><h3>III. Thi đua và nề nếp</h3><p>${d.rank.length} lớp có dữ liệu xếp hạng; ${d.incidents.length} ghi nhận vi phạm.</p><h3>IV. Học sinh cần quan tâm</h3><p>${d.students.filter((student) => student.policy_groups || student.special_needs || !["", "none"].includes(String(student.difficulty_status || "").toLowerCase())).length} học sinh có thông tin chính sách, hoàn cảnh hoặc nhu cầu hỗ trợ cần theo dõi.</p>`;
+          return `<div class="center"><small>${esc(d.school?.name || "NHÀ TRƯỜNG")}</small><h2 style="margin:8px 0">${title}</h2><p>${esc(d.week?.name || "")} • ${esc(campusName(state.campusId))}</p></div><div class="split"><small>Tạo lúc: ${fmtDateTime(now())}</small><small>Phạm vi dữ liệu: ${esc(d.week?.name || "Năm học")} / ${esc(campusName(state.campusId))}</small></div><hr style="border:0;border-top:1px solid var(--line)">${body}<div style="display:grid;grid-template-columns:1fr 1fr;text-align:center;margin-top:35px"><div><strong>Người lập báo cáo</strong></div><div><strong>Xác nhận của nhà trường</strong></div></div>`;
         }
         function simpleTable(head, rows) {
           return `<div class="table-wrap" style="max-height:none"><table><thead><tr>${head.map((x) => `<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((x, i) => `<td class="${i === 0 ? "wrap" : ""}">${esc(x)}</td>`).join("")}</tr>`).join("") || `<tr><td colspan="${head.length}" class="empty">Không có dữ liệu trong phạm vi đã chọn.</td></tr>`}</tbody></table></div>`;
@@ -8027,18 +8818,37 @@
         async function exportReportStructured(type, d, format) {
           let rows = [],
             columns = [];
-          if (type === "scores") {
-            rows = d.rank.map((row) => ({
+          if (
+            [
+              "scores",
+              "scores_month",
+              "scores_semester",
+              "scores_year",
+              "ranking",
+            ].includes(type)
+          ) {
+            const rankingScope =
+                {
+                  scores_month: "month",
+                  scores_semester: "semester",
+                  scores_year: "year",
+                }[type] || "week",
+              scopedRanking = await calculateAggregateRanking(rankingScope);
+            rows = scopedRanking.map((row) => ({
               rank: row.rank,
               class_name: row.class_name,
               campus: campusName(row.campus_id),
               total: row.total,
+              period_count: row.period_count || 1,
+              raw_total: row.raw_total ?? row.total,
             }));
             columns = [
               ["rank", "Hạng"],
               ["class_name", "Lớp"],
               ["campus", "Cơ sở"],
-              ["total", "Tổng điểm"],
+              ["period_count", "Số tuần đã duyệt"],
+              ["total", "Điểm trung bình"],
+              ["raw_total", "Tổng điểm"],
             ];
           } else if (type === "activities") {
             rows = d.activities.map((row) => ({
@@ -8068,9 +8878,100 @@
               ["proposed_deduction", "Điểm trừ đề xuất"],
               ["status", "Trạng thái"],
             ];
+          } else if (type === "workplan") {
+            const planNames = new Map(
+              d.plans.map((plan) => [plan.id, plan.name]),
+            );
+            rows = [
+              ...d.plans.map((plan) => ({
+                record_type: "Kế hoạch",
+                code: plan.code || "",
+                name: plan.name,
+                parent_plan: "",
+                start_date: plan.start_date,
+                due_date: plan.end_date,
+                status: statusLabel(plan.status),
+                progress: Number(plan.progress || 0),
+                result: plan.result || "",
+                evidence: plan.evidence || "",
+                notes: plan.notes || "",
+              })),
+              ...d.tasks.map((task) => ({
+                record_type: "Công việc",
+                code: task.code || "",
+                name: task.title,
+                parent_plan: planNames.get(task.plan_id) || "",
+                start_date: task.start_date,
+                due_date: task.due_date,
+                status: statusLabel(task.status),
+                progress: Number(task.progress || 0),
+                result: task.result || "",
+                evidence: task.evidence || "",
+                notes: task.notes || "",
+              })),
+            ];
+            columns = [
+              ["record_type", "Loại"],
+              ["code", "Mã"],
+              ["name", "Kế hoạch/Công việc"],
+              ["parent_plan", "Thuộc kế hoạch"],
+              ["start_date", "Bắt đầu"],
+              ["due_date", "Kết thúc/Hạn"],
+              ["status", "Trạng thái"],
+              ["progress", "Tiến độ (%)"],
+              ["result", "Kết quả"],
+              ["evidence", "Minh chứng"],
+              ["notes", "Ghi chú"],
+            ];
+          } else if (type === "students") {
+            rows = d.students.map((student) => ({
+              student_code: student.student_code || student.code || "",
+              full_name: student.full_name || student.name || "",
+              class_name: student.class_name || student.class_code || "",
+              organization_status: studentOrganizationLabel(
+                student.organization_status,
+              ),
+              organization_joined_date:
+                student.organization_joined_date || "",
+              policy_groups: student.policy_groups || "",
+              difficulty_status: studentDifficultyLabel(
+                student.difficulty_status,
+              ),
+              special_needs: student.special_needs || "",
+              support_notes: student.support_notes || "",
+              guardian_name: student.guardian_name || "",
+              guardian_phone: student.guardian_phone || "",
+            }));
+            columns = [
+              ["student_code", "Mã học sinh"],
+              ["full_name", "Họ tên"],
+              ["class_name", "Lớp"],
+              ["organization_status", "Tình trạng tổ chức"],
+              ["organization_joined_date", "Ngày vào"],
+              ["policy_groups", "Diện chính sách"],
+              ["difficulty_status", "Hoàn cảnh/hỗ trợ"],
+              ["special_needs", "Nhu cầu đặc biệt"],
+              ["support_notes", "Ghi chú hỗ trợ"],
+              ["guardian_name", "Người liên hệ"],
+              ["guardian_phone", "Điện thoại"],
+            ];
           } else if (type === "plans") {
-            rows = d.plans;
-            columns = [["code", "Mã"], ["name", "Kế hoạch"], ["level", "Cấp"], ["start_date", "Bắt đầu"], ["end_date", "Kết thúc"], ["status", "Trạng thái"]];
+            rows = d.plans.map((plan) => ({
+              ...plan,
+              status: statusLabel(plan.status),
+            }));
+            columns = [
+              ["code", "Mã"],
+              ["name", "Kế hoạch"],
+              ["level", "Cấp"],
+              ["start_date", "Bắt đầu"],
+              ["end_date", "Kết thúc"],
+              ["status", "Trạng thái"],
+              ["progress", "Tiến độ (%)"],
+              ["result", "Kết quả"],
+              ["evidence", "Minh chứng"],
+              ["notes", "Ghi chú"],
+            ];
           } else if (type === "organization") {
             rows = d.organization;
             columns = [["name", "Họ tên"], ["class_name", "Lớp"], ["unit", "Đội/ban"], ["position", "Chức vụ"], ["term", "Nhiệm kỳ"]];
@@ -8095,6 +8996,8 @@
             ];
           } else if (type === "summary") {
             rows = [
+              { metric: "Học sinh", value: d.students.length },
+              { metric: "Kế hoạch", value: d.plans.length },
               { metric: "Công việc", value: d.tasks.length },
               { metric: "Hoạt động", value: d.activities.length },
               { metric: "Vi phạm", value: d.incidents.length },
@@ -8105,19 +9008,27 @@
           } else {
             rows = d.tasks.map((row) => ({
               title: row.title,
+              plan: d.plans.find((plan) => plan.id === row.plan_id)?.name || "",
               group: row.group,
               campus: campusName(row.campus_id),
               due_date: row.due_date,
               status: statusLabel(row.status),
               progress: row.progress,
+              result: row.result || "",
+              evidence: row.evidence || "",
+              notes: row.notes || "",
             }));
             columns = [
               ["title", "Công việc"],
+              ["plan", "Thuộc kế hoạch"],
               ["group", "Nhóm"],
               ["campus", "Cơ sở"],
               ["due_date", "Hạn"],
               ["status", "Trạng thái"],
               ["progress", "Tiến độ"],
+              ["result", "Kết quả"],
+              ["evidence", "Minh chứng"],
+              ["notes", "Ghi chú"],
             ];
           }
           try {
@@ -8305,7 +9216,7 @@
               : false;
           openModal(
             "Quản lý bộ tiêu chí thi đua",
-            `<div class="notice warn">Bộ đã phát sinh điểm được khóa cấu trúc. Hãy nhân bản thành phiên bản mới để thay đổi nội dung quan trọng.</div><div class="toolbar"><select id="criteriaSetChooser" class="grow"><option value="">— Chọn bộ tiêu chí —</option>${sets.map((s) => `<option value="${s.id}" ${s.id === set?.id ? "selected" : ""}>${esc(s.name)} • v${esc(s.version || "1.0")} • ${statusLabel(s.status)}</option>`).join("")}</select><button class="btn small" id="newCriteriaSet">＋ Bộ mới</button><button class="btn small" id="cloneCriteriaSet" ${set ? "" : "disabled"}>Nhân bản phiên bản</button><button class="btn small" id="exportCriteriaSet" ${set ? "" : "disabled"}>Xuất JSON</button></div>${set ? `<form id="criteriaSetForm"><div class="form-grid"><div class="field full"><label class="required">Tên bộ tiêu chí</label><input name="name" value="${esc(set.name || "")}" required ${used ? "readonly" : ""}></div><div class="field"><label>Phiên bản</label><input name="version" value="${esc(set.version || "1.0")}" ${used ? "readonly" : ""}></div><div class="field"><label>Học kỳ</label><select name="semester_id"><option value="">Mọi học kỳ</option>${(state.cache.sems || []).map((s) => `<option value="${s.id}" ${set.semester_id === s.id ? "selected" : ""}>${esc(s.name)}</option>`).join("")}</select></div><div class="field"><label>Cơ sở</label><select name="campus_id"><option value="all">Toàn trường</option>${state.cache.campuses.map((c) => `<option value="${c.id}" ${set.campus_id === c.id ? "selected" : ""}>${esc(c.name)}</option>`).join("")}</select></div><div class="field"><label>Cách tính</label><select name="formula" ${used ? "disabled" : ""}><option value="base" ${set.formula === "base" ? "selected" : ""}>Điểm chuẩn rồi cộng/trừ</option><option value="sum" ${set.formula === "sum" ? "selected" : ""}>Cộng các thành phần</option><option value="weighted" ${set.formula === "weighted" ? "selected" : ""}>Trọng số theo tiêu chí</option></select></div><div class="field"><label>Điểm chuẩn</label><input type="number" step="0.01" name="base_score" value="${Number(set.base_score || 0)}" ${used ? "readonly" : ""}></div><div class="field"><label>Hiệu lực từ</label><input type="date" name="effective_from" value="${esc(set.effective_from || "")}"></div><div class="field"><label>Hiệu lực đến</label><input type="date" name="effective_to" value="${esc(set.effective_to || "")}"></div><div class="field"><label>Trạng thái</label><select name="status"><option value="draft" ${set.status === "draft" ? "selected" : ""}>Dự thảo</option><option value="active" ${set.status === "active" ? "selected" : ""}>Đang áp dụng</option><option value="stopped" ${set.status === "stopped" ? "selected" : ""}>Ngừng áp dụng</option></select></div><div class="field full"><label>Căn cứ nội bộ</label><textarea name="basis">${esc(set.basis || "")}</textarea></div></div></form><div class="split mt"><h3>Tiêu chí/thành phần</h3><button class="btn small primary" id="newCriterion" ${used ? "disabled" : ""}>＋ Tiêu chí</button></div><div class="table-wrap" style="max-height:340px"><table><thead><tr><th>TT</th><th>Mã</th><th>Nhóm</th><th>Tên</th><th>Kiểu</th><th>Cộng/trừ</th><th>Giới hạn</th><th>Trọng số</th><th>Trạng thái</th><th></th></tr></thead><tbody>${criteria.map((c, i) => `<tr><td>${i + 1}</td><td>${esc(c.code)}</td><td>${esc(c.group || "—")}</td><td class="wrap">${esc(c.name)}</td><td>${esc(c.data_type || "score")}</td><td>${Number(c.points || 0) >= 0 ? "Cộng" : "Trừ"}</td><td>${c.min ?? "—"} → ${c.max ?? "—"}</td><td>${Number(c.weight || 1)}</td><td>${c.active !== false ? "Đang dùng" : "Ngừng"}</td><td><button class="link-btn" data-edit-criterion="${c.id}" ${used ? "disabled" : ""}>Sửa</button><button class="link-btn" data-toggle-criterion="${c.id}">${c.active !== false ? "Ngừng" : "Bật"}</button></td></tr>`).join("") || '<tr><td colspan="10" class="empty">Chưa có tiêu chí.</td></tr>'}</tbody></table></div>` : '<div class="empty">Chưa có bộ tiêu chí. Hãy tạo bộ mới.</div>'}`,
+            `<div class="notice warn">Bộ đã phát sinh điểm được khóa cấu trúc. Hãy nhân bản thành phiên bản mới để thay đổi nội dung quan trọng.</div><div class="toolbar"><select id="criteriaSetChooser" class="grow"><option value="">— Chọn bộ tiêu chí —</option>${sets.map((s) => `<option value="${s.id}" ${s.id === set?.id ? "selected" : ""}>${esc(s.name)} • v${esc(s.version || "1.0")} • ${statusLabel(s.status)}</option>`).join("")}</select><button class="btn small" id="newCriteriaSet">＋ Bộ mới</button><button class="btn small" id="cloneCriteriaSet" ${set ? "" : "disabled"}>Nhân bản phiên bản</button><button class="btn small" id="exportCriteriaSet" ${set ? "" : "disabled"}>Xuất JSON</button><button class="btn small danger" id="deleteCriteriaSet" ${set && !used ? "" : "disabled"}>Xóa bộ</button></div>${set ? `<form id="criteriaSetForm"><div class="form-grid"><div class="field full"><label class="required">Tên bộ tiêu chí</label><input name="name" value="${esc(set.name || "")}" required ${used ? "readonly" : ""}></div><div class="field"><label>Phiên bản</label><input name="version" value="${esc(set.version || "1.0")}" ${used ? "readonly" : ""}></div><div class="field"><label>Học kỳ</label><select name="semester_id"><option value="">Mọi học kỳ</option>${(state.cache.sems || []).map((s) => `<option value="${s.id}" ${set.semester_id === s.id ? "selected" : ""}>${esc(s.name)}</option>`).join("")}</select></div><div class="field"><label>Cơ sở</label><select name="campus_id"><option value="all">Toàn trường</option>${state.cache.campuses.map((c) => `<option value="${c.id}" ${set.campus_id === c.id ? "selected" : ""}>${esc(c.name)}</option>`).join("")}</select></div><div class="field"><label>Cách tính</label><select name="formula" ${used ? "disabled" : ""}><option value="base" ${set.formula === "base" ? "selected" : ""}>Điểm chuẩn rồi cộng/trừ</option><option value="sum" ${set.formula === "sum" ? "selected" : ""}>Cộng các thành phần</option><option value="weighted" ${set.formula === "weighted" ? "selected" : ""}>Trọng số theo tiêu chí</option></select></div><div class="field"><label>Điểm chuẩn</label><input type="number" step="0.01" name="base_score" value="${Number(set.base_score || 0)}" ${used ? "readonly" : ""}></div><div class="field"><label>Hiệu lực từ</label><input type="date" name="effective_from" value="${esc(set.effective_from || "")}"></div><div class="field"><label>Hiệu lực đến</label><input type="date" name="effective_to" value="${esc(set.effective_to || "")}"></div><div class="field"><label>Trạng thái</label><select name="status"><option value="draft" ${set.status === "draft" ? "selected" : ""}>Dự thảo</option><option value="active" ${set.status === "active" ? "selected" : ""}>Đang áp dụng</option><option value="stopped" ${set.status === "stopped" ? "selected" : ""}>Ngừng áp dụng</option></select></div><div class="field full"><label>Căn cứ nội bộ</label><textarea name="basis">${esc(set.basis || "")}</textarea></div></div></form><div class="split mt"><h3>Tiêu chí/thành phần</h3><button class="btn small primary" id="newCriterion" ${used ? "disabled" : ""}>＋ Tiêu chí</button></div><div class="table-wrap" style="max-height:340px"><table><thead><tr><th>TT</th><th>Mã</th><th>Nhóm</th><th>Tên</th><th>Kiểu</th><th>Cộng/trừ</th><th>Giới hạn</th><th>Trọng số</th><th>Trạng thái</th><th></th></tr></thead><tbody>${criteria.map((c, i) => `<tr><td>${i + 1}</td><td>${esc(c.code)}</td><td>${esc(c.group || "—")}</td><td class="wrap">${esc(c.name)}</td><td>${esc(c.data_type || "score")}</td><td>${Number(c.points || 0) >= 0 ? "Cộng" : "Trừ"}</td><td>${c.min ?? "—"} → ${c.max ?? "—"}</td><td>${Number(c.weight || 1)}</td><td>${c.active !== false ? "Đang dùng" : "Ngừng"}</td><td><button class="link-btn" data-edit-criterion="${c.id}" ${used ? "disabled" : ""}>Sửa</button><button class="link-btn" data-toggle-criterion="${c.id}" ${used ? "disabled" : ""}>${c.active !== false ? "Ngừng" : "Bật"}</button><button class="link-btn danger" data-delete-criterion="${c.id}" ${used ? "disabled" : ""}>Xóa</button></td></tr>`).join("") || '<tr><td colspan="10" class="empty">Chưa có tiêu chí.</td></tr>'}</tbody></table></div>` : '<div class="empty">Chưa có bộ tiêu chí. Hãy tạo bộ mới.</div>'}`,
             `<button class="btn" id="closeCriteria">Đóng</button>${set ? '<button class="btn primary" id="saveCriteriaSet">Lưu bộ tiêu chí</button>' : ""}`,
             true,
           );
@@ -8330,6 +9241,47 @@
                 `bo-tieu-chi-${today()}.json`,
                 "application/json",
               );
+          if ($("#deleteCriteriaSet"))
+            $("#deleteCriteriaSet").onclick = async () => {
+              const usedNow = (await db.all("weekly_score_sheets")).some(
+                (sheet) => sheet.criteria_set_id === set.id,
+              );
+              if (usedNow)
+                return toast(
+                  "Bộ đã phát sinh bảng điểm nên không thể xóa. Hãy ngừng áp dụng hoặc nhân bản phiên bản mới.",
+                  "bad",
+                );
+              if (
+                !confirm(
+                  `Xóa bộ “${set.name}” và toàn bộ tiêu chí chưa sử dụng trong bộ?`,
+                )
+              )
+                return;
+              const currentCriteria = (await db.all("criteria")).filter(
+                  (criterion) => criterion.criteria_set_id === set.id,
+                ),
+                usedCriterionIds = new Set(
+                  (await db.all("score_entries")).map(
+                    (entry) => entry.criteria_id,
+                  ),
+                );
+              if (
+                currentCriteria.some((criterion) =>
+                  usedCriterionIds.has(criterion.id),
+                )
+              )
+                return toast(
+                  "Một tiêu chí đã có điểm; bộ được giữ lại để bảo toàn báo cáo cũ.",
+                  "bad",
+                );
+              for (const criterion of currentCriteria)
+                await db.remove("criteria", criterion.id);
+              await db.remove("criteria_sets", set.id);
+              state.criteriaSetId = "";
+              closeModal();
+              toast("Đã xóa bộ tiêu chí chưa sử dụng.");
+              renderScores();
+            };
           if ($("#saveCriteriaSet"))
             $("#saveCriteriaSet").onclick = async () => {
               const f = $("#criteriaSetForm");
@@ -8365,6 +9317,29 @@
                 const c = await db.get("criteria", b.dataset.toggleCriterion);
                 await db.put("criteria", { ...c, active: c.active === false });
                 closeModal();
+                showCriteriaConfig(set.id);
+              }),
+          );
+          $$("[data-delete-criterion]").forEach(
+            (button) =>
+              (button.onclick = async () => {
+                const criterion = await db.get(
+                  "criteria",
+                  button.dataset.deleteCriterion,
+                );
+                if (!criterion) return;
+                const hasScores = (await db.all("score_entries")).some(
+                  (entry) => entry.criteria_id === criterion.id,
+                );
+                if (hasScores)
+                  return toast(
+                    "Tiêu chí đã có điểm nên không thể xóa; hãy nhân bản bộ để chỉnh cho tuần mới.",
+                    "bad",
+                  );
+                if (!confirm(`Xóa tiêu chí “${criterion.name}”?`)) return;
+                await db.remove("criteria", criterion.id);
+                closeModal();
+                toast("Đã xóa tiêu chí chưa sử dụng.");
                 showCriteriaConfig(set.id);
               }),
           );
@@ -8680,56 +9655,21 @@
             }
           };
         }
-        function yearForm() {
-          openModal(
-            "Thêm năm học",
-            `<form id="yearForm"><div class="form-grid"><div class="field full"><label class="required">Tên năm học</label><input name="name" placeholder="2027–2028" required></div><div class="field"><label class="required">Ngày bắt đầu</label><input type="date" name="start_date" required></div><div class="field"><label class="required">Ngày kết thúc</label><input type="date" name="end_date" required></div><label class="check-row full"><input type="checkbox" name="is_current" value="true"> Đặt làm năm học hiện hành</label></div></form>`,
-            `<button class="btn" id="cancelYear">Hủy</button><button class="btn primary" id="saveYear">Tạo năm học và 40 tuần</button>`,
-          );
-          $("#cancelYear").onclick = closeModal;
-          $("#saveYear").onclick = async () => {
-            const f = $("#yearForm");
-            if (!f.reportValidity()) return;
-            const d = Object.fromEntries(new FormData(f));
-            if (d.end_date <= d.start_date)
-              return toast("Ngày kết thúc phải sau ngày bắt đầu.", "bad");
-            const id = uid();
-            if (d.is_current) {
-              for (const y of await db.all("school_years"))
-                await db.put("school_years", { ...y, is_current: false });
-            }
-            await db.put("school_years", {
-              id,
-              ...d,
-              is_current: !!d.is_current,
-            });
-            const weeks = [];
-            let date = new Date(d.start_date + "T00:00:00");
-            for (let i = 1; i <= 40; i++) {
-              let end = new Date(date);
-              end.setDate(end.getDate() + 6);
-              weeks.push({
-                id: uid(),
-                school_year_id: id,
-                number: i,
-                name: `Tuần ${i}`,
-                start_date: localISO(date),
-                end_date: localISO(end),
-              });
-              date.setDate(date.getDate() + 7);
-            }
-            await db.bulkPut("school_weeks", weeks);
-            closeModal();
-            await loadContext();
-            toast("Đã tạo năm học");
-            renderSettings();
-          };
-        }
         async function classForm(id) {
           const c = id
             ? await db.get("classes", id)
             : { active: true, campus_id: state.cache.campuses[0]?.id };
-          const allowedGrades = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+          const school = (await db.all("schools"))[0],
+            schoolLevel = school?.school_level || APP.schoolLevel,
+            baseGrades =
+              schoolLevel === "TH"
+                ? [1, 2, 3, 4, 5]
+                : schoolLevel === "THCS"
+                  ? [6, 7, 8, 9]
+                  : [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            allowedGrades = baseGrades.includes(Number(c.grade))
+              ? baseGrades
+              : [...baseGrades, Number(c.grade)].filter(Number.isFinite);
           openModal(
             id ? "Sửa lớp" : "Thêm lớp",
             `<form id="classForm"><div class="form-grid"><div class="field"><label class="required">Mã lớp</label><input name="code" value="${esc(c.code || "")}" required maxlength="40" placeholder="VD: CS1-6A1"></div><div class="field"><label class="required">Tên lớp/chi đội</label><input name="class_name" value="${esc(c.class_name || "")}" required maxlength="80"></div><div class="field"><label class="required">Khối</label><select name="grade">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((g) => `<option value="${g}" ${Number(c.grade) === g ? "selected" : ""}>Khối ${g}</option>`).join("")}</select></div><div class="field"><label class="required">Cơ sở</label><select name="campus_id">${state.cache.campuses.map((x) => `<option value="${x.id}" ${c.campus_id === x.id ? "selected" : ""}>${esc(x.name)}</option>`).join("")}</select></div><div class="field"><label>Giáo viên chủ nhiệm</label><input name="teacher" value="${esc(c.teacher || "")}" maxlength="150"></div><div class="field full"><label>Ghi chú</label><textarea name="notes" maxlength="500">${esc(c.notes || "")}</textarea></div><label class="check-row"><input type="checkbox" name="active" value="true" ${c.active !== false ? "checked" : ""}> Đang hoạt động</label></div></form>`,
@@ -9080,12 +10020,14 @@
           let step = 0;
           const data = {
             school: "",
+            schoolLevel: "LIEN_CAP",
             code: "",
             address: "",
             campuses: ["Cơ sở 1", "Cơ sở 2"],
             year: "2026–2027",
             start: "2026-08-15",
             end: "2027-05-31",
+            weekCount: 40,
             mode: "local",
           };
           const render = () => {
@@ -9102,11 +10044,11 @@
             ];
             let body = "";
             if (step === 0)
-              body = `<div class="form-grid"><div class="field full"><label class="required">Tên trường</label><input id="wSchool" value="${esc(data.school)}" placeholder="TRƯỜNG THCS…"></div><div class="field"><label>Mã trường</label><input id="wCode" value="${esc(data.code)}"></div><div class="field"><label>Địa chỉ khái quát</label><input id="wAddress" value="${esc(data.address)}"></div></div>`;
+              body = `<div class="form-grid"><div class="field full"><label class="required">Tên trường</label><input id="wSchool" value="${esc(data.school)}" placeholder="Nhập tên trường"></div><div class="field"><label>Cấp học</label><select id="wSchoolLevel"><option value="TH" ${data.schoolLevel === "TH" ? "selected" : ""}>Tiểu học</option><option value="THCS" ${data.schoolLevel === "THCS" ? "selected" : ""}>Trung học cơ sở</option><option value="LIEN_CAP" ${data.schoolLevel === "LIEN_CAP" ? "selected" : ""}>Liên cấp Tiểu học – THCS</option></select></div><div class="field"><label>Mã trường</label><input id="wCode" value="${esc(data.code)}"></div><div class="field full"><label>Địa chỉ khái quát</label><input id="wAddress" value="${esc(data.address)}"></div></div>`;
             if (step === 1)
               body = `<div class="field"><label>Tên cơ sở, mỗi dòng một cơ sở</label><textarea id="wCampuses">${esc(data.campuses.join("\n"))}</textarea></div>`;
             if (step === 2)
-              body = `<div class="form-grid"><div class="field full"><label>Năm học</label><input id="wYear" value="${esc(data.year)}"></div><div class="field"><label>Bắt đầu</label><input type="date" id="wStart" value="${data.start}"></div><div class="field"><label>Kết thúc</label><input type="date" id="wEnd" value="${data.end}"></div></div>`;
+              body = `<div class="form-grid"><div class="field full"><label>Năm học</label><input id="wYear" value="${esc(data.year)}"></div><div class="field"><label>Bắt đầu</label><input type="date" id="wStart" value="${data.start}"></div><div class="field"><label>Kết thúc</label><input type="date" id="wEnd" value="${data.end}"></div><div class="field"><label>Số tuần trong năm học</label><input type="number" id="wWeekCount" min="1" max="53" value="${Number(data.weekCount || 40)}"><small>Thường 35–40 tuần; đơn vị đặc thù có thể chỉnh.</small></div></div>`;
             if (step === 3)
               body = `<p>Thầy có thể nhập danh sách lớp ngay sau khi hoàn tất tại <strong>Thiết lập → Danh sách lớp</strong>.</p><div class="notice">Hệ thống hỗ trợ CSV và dán trực tiếp từ Excel, có xem trước và kiểm tra dòng lỗi.</div>`;
             if (step === 4)
@@ -9118,7 +10060,7 @@
             if (step === 7)
               body = `<div class="notice"><strong>Chế độ local-first:</strong> mọi thao tác được lưu ngay vào IndexedDB của thiết bị.</div><label class="check-row"><input type="radio" checked> Đồng bộ cá nhân qua Google Drive appDataFolder khi trực tuyến</label><p class="muted">${cloud.isConfigured() ? "Cấu hình Drive đã hợp lệ. Mỗi thiết bị cần chọn đúng cùng Gmail và xác nhận ghép lần đầu." : "Chưa có cấu hình OAuth/Gmail. Ứng dụng vẫn dùng cục bộ; hãy tạo app-config.js bằng SETUP_CONFIG.html trước khi triển khai."}</p>`;
             if (step === 8)
-              body = `<div class="notice"><strong>Checklist sẵn sàng</strong><ul><li>${data.school ? "✓" : "○"} Tên trường</li><li>✓ ${data.campuses.length} cơ sở</li><li>✓ Năm học và 40 tuần</li><li>○ Danh sách lớp thật — có thể nhập sau</li><li>○ Bản sao lưu đầu tiên — tạo sau khi hoàn tất cấu hình</li></ul></div>`;
+              body = `<div class="notice"><strong>Checklist sẵn sàng</strong><ul><li>${data.school ? "✓" : "○"} Tên trường</li><li>✓ ${data.campuses.length} cơ sở</li><li>✓ Năm học và ${Number(data.weekCount || 40)} tuần</li><li>○ Danh sách lớp thật — có thể nhập sau</li><li>○ Bản sao lưu đầu tiên — tạo sau khi hoàn tất cấu hình</li></ul></div>`;
             openModal(
               `${step + 1}/9 • ${titles[step]}`,
               `<div class="wizard-steps">${Array.from({ length: 9 }, (_, i) => `<span class="${i < step ? "done" : i === step ? "active" : ""}"></span>`).join("")}</div>${body}`,
@@ -9151,6 +10093,7 @@
             function capture() {
               if (step === 0) {
                 data.school = $("#wSchool")?.value.trim() || data.school;
+                data.schoolLevel = $("#wSchoolLevel")?.value || data.schoolLevel;
                 data.code = $("#wCode")?.value.trim() || "";
                 data.address = $("#wAddress")?.value.trim() || "";
               }
@@ -9164,6 +10107,9 @@
                 data.year = $("#wYear")?.value.trim() || data.year;
                 data.start = $("#wStart")?.value || data.start;
                 data.end = $("#wEnd")?.value || data.end;
+                data.weekCount = Number(
+                  $("#wWeekCount")?.value || data.weekCount,
+                );
               }
             }
             async function finish() {
@@ -9172,6 +10118,7 @@
                 await db.put("schools", {
                   ...school,
                   name: data.school,
+                  school_level: data.schoolLevel,
                   code: data.code,
                   address: data.address,
                   is_sample: false,
@@ -9189,6 +10136,47 @@
                     name: data.campuses[i],
                     code: `CS${i + 1}`,
                   });
+              }
+              const year =
+                (await db.get("school_years", state.yearId)) ||
+                (await db.all("school_years"))[0];
+              if (year) {
+                const count = clamp(
+                    Math.round(Number(data.weekCount || 40)),
+                    1,
+                    53,
+                  ),
+                  oldWeeks = sortWeeksAscending(
+                    (await db.allIncludingDeleted("school_weeks")).filter(
+                      (week) => week.school_year_id === year.id,
+                    ),
+                  ),
+                  weekRows = [];
+                for (let index = 0; index < count; index++) {
+                  const startDate = addDays(data.start, index * 7),
+                    endDate = addDays(startDate, 6);
+                  weekRows.push({
+                    ...(oldWeeks[index] || {}),
+                    id: oldWeeks[index]?.id || uid(),
+                    school_year_id: year.id,
+                    number: index + 1,
+                    name: `Tuần ${index + 1}`,
+                    start_date: startDate,
+                    end_date: endDate,
+                    active: true,
+                  });
+                }
+                for (const oldWeek of oldWeeks.slice(count))
+                  weekRows.push({ ...oldWeek, active: false });
+                await db.bulkPut("school_weeks", weekRows);
+                await db.put("school_years", {
+                  ...year,
+                  name: data.year,
+                  start_date: data.start,
+                  end_date: data.end,
+                  week_count: count,
+                  is_current: true,
+                });
               }
               await setting("onboarded", true);
               $("#modalClose").style.display = "grid";
@@ -9338,9 +10326,21 @@
             unresolvedConflicts = (await db.all("sync_conflicts")).filter(
               (row) => row.status === "unresolved",
             ).length,
+            syncWarnings = (await db.all("operation_journal"))
+              .filter(
+                (row) =>
+                  row.status === "warning" ||
+                  row.status === "completed_with_warnings",
+              )
+              .sort((a, b) =>
+                String(b.completed_at || b.created_at || "").localeCompare(
+                  String(a.completed_at || a.created_at || ""),
+                ),
+              )
+              .slice(0, 8),
             syncPanel = !syncInfo.configured
               ? `<div class="card mb"><div class="card-head"><h2>Đồng bộ Google Drive</h2><span class="badge yellow">Chưa cấu hình</span></div><div class="card-body"><div class="notice warn"><strong>Ứng dụng vẫn tự lưu trên thiết bị.</strong> Muốn dùng cùng dữ liệu trên điện thoại và máy tính, cần tạo app-config.js riêng cho đúng Gmail.</div><p>${esc(syncInfo.issues.join("; "))}.</p><div class="toolbar"><button class="btn primary" id="openConfigSetup">Mở công cụ tạo cấu hình</button></div><small class="muted">Không đưa client secret, token, mật khẩu Gmail hoặc dữ liệu thật lên GitHub.</small></div></div>`
-              : `<div class="card mb"><div class="card-head"><h2>Đồng bộ Google Drive appDataFolder</h2><span class="badge ${syncInfo.code === "synced" ? "green" : syncInfo.code === "conflict" || syncInfo.code === "error" ? "red" : "yellow"}">${esc(syncInfo.message)}</span></div><div class="card-body"><div class="sync-summary"><div><span>Tài khoản đang chọn</span><strong>${esc(syncInfo.account?.email || syncInfo.account?.displayName || "Chưa kết nối")}</strong></div><div><span>Thay đổi đang chờ</span><strong>${pendingCount.toLocaleString("vi-VN")}</strong></div><div><span>Xung đột chưa xử lý</span><strong>${unresolvedConflicts.toLocaleString("vi-VN")}</strong></div><div><span>Đồng bộ xác nhận gần nhất</span><strong>${syncInfo.lastSyncedAt ? fmtDateTime(syncInfo.lastSyncedAt) : "Chưa có"}</strong></div></div>${Number.isFinite(syncInfo.uploadProgress) ? `<progress class="task-progress mt" max="100" value="${clamp(syncInfo.uploadProgress, 0, 100)}"></progress>` : ""}<div class="toolbar mt">${syncInfo.code === "syncing" ? '<button class="btn danger" id="cancelDriveSync">Hủy đồng bộ</button>' : syncInfo.connected ? '<button class="btn primary" id="syncNow">Đồng bộ ngay</button><button class="btn" id="changeDriveAccount">Đổi tài khoản</button>' : '<button class="btn primary" id="connectDrive">Kết nối lại Google Drive</button>'}${syncInfo.pairing?.required ? '<button class="btn" id="pairDrive">Xác nhận ghép dữ liệu</button>' : ""}<button class="btn" id="viewConflicts" ${unresolvedConflicts ? "" : "disabled"}>Xử lý xung đột (${unresolvedConflicts})</button></div><div class="notice warn">Đồng bộ chỉ chạy khi ứng dụng đang mở và trình duyệt cho phép. Google Drive không thay thế bản sao lưu ngoài; appDataFolder có thể mất khi gỡ quyền hoặc xóa dữ liệu ứng dụng.</div></div></div>`;
+              : `<div class="card mb"><div class="card-head"><h2>Đồng bộ Google Drive appDataFolder</h2><span class="badge ${syncInfo.code === "synced" ? "green" : syncInfo.code === "conflict" || syncInfo.code === "error" ? "red" : "yellow"}">${esc(syncInfo.message)}</span></div><div class="card-body"><div class="sync-summary"><div><span>Tài khoản đang chọn</span><strong>${esc(syncInfo.account?.email || syncInfo.account?.displayName || "Chưa kết nối")}</strong></div><div><span>Thay đổi đang chờ</span><strong>${pendingCount.toLocaleString("vi-VN")}</strong></div><div><span>Xung đột chưa xử lý</span><strong>${unresolvedConflicts.toLocaleString("vi-VN")}</strong></div><div><span>Đồng bộ xác nhận gần nhất</span><strong>${syncInfo.lastSyncedAt ? fmtDateTime(syncInfo.lastSyncedAt) : "Chưa có"}</strong></div></div>${Number.isFinite(syncInfo.uploadProgress) ? `<progress class="task-progress mt" max="100" value="${clamp(syncInfo.uploadProgress, 0, 100)}"></progress>` : ""}<div class="toolbar mt">${syncInfo.code === "syncing" ? '<button class="btn" disabled>Đang đồng bộ an toàn…</button>' : syncInfo.connected ? '<button class="btn primary" id="syncNow">Đồng bộ ngay</button><button class="btn" id="changeDriveAccount">Đổi tài khoản</button>' : '<button class="btn primary" id="connectDrive">Kết nối lại Google Drive</button>'}${syncInfo.pairing?.required ? '<button class="btn" id="pairDrive">Xác nhận ghép dữ liệu</button>' : ""}<button class="btn" id="repairDriveSync">Tự kiểm tra và sửa đồng bộ</button><button class="btn" id="viewConflicts" ${unresolvedConflicts ? "" : "disabled"}>Xử lý xung đột (${unresolvedConflicts})</button></div>${syncWarnings.length ? `<div class="notice warn"><strong>Đồng bộ vẫn tiếp tục phần hợp lệ.</strong><br>${syncWarnings.map((row) => esc(row.error || row.operation || "Cảnh báo dữ liệu đã được cách ly")).join("<br>")}</div>` : ""}<div class="notice warn">Đồng bộ chỉ chạy khi ứng dụng đang mở và trình duyệt cho phép. Google Drive không thay thế bản sao lưu ngoài; appDataFolder có thể mất khi gỡ quyền hoặc xóa dữ liệu ứng dụng.</div></div></div>`;
           setContent(
             pageHead(
               "Sao lưu – đồng bộ",
@@ -9410,10 +10410,20 @@
                 renderBackup();
               }
             };
-          if ($("#cancelDriveSync"))
-            $("#cancelDriveSync").onclick = () => {
-              cloud.cancelSync();
-              renderBackup();
+          if ($("#repairDriveSync"))
+            $("#repairDriveSync").onclick = async () => {
+              const button = $("#repairDriveSync");
+              button.disabled = true;
+              try {
+                await cloud.repairSync();
+                toast(
+                  "Đã kiểm tra hàng đợi, tạo điểm khôi phục và tiếp tục đồng bộ phần hợp lệ.",
+                );
+              } catch (error) {
+                toast("Chưa thể tự sửa đồng bộ: " + error.message, "bad");
+              } finally {
+                renderBackup();
+              }
             };
           if ($("#pairDrive"))
             $("#pairDrive").onclick = showDrivePairingWizard;
@@ -9601,6 +10611,28 @@
                 text = JSON.stringify(await encryptText(text, password));
                 ext = "tdt";
               }
+              const packaged = JSON.parse(text);
+              if ($("#backupMode").value === "encrypted") {
+                if (
+                  packaged.format !== "TPT-ENCRYPTED-1" ||
+                  !packaged.data ||
+                  !packaged.iv ||
+                  !packaged.salt
+                )
+                  throw new Error("Gói sao lưu mã hóa chưa hoàn chỉnh.");
+              } else {
+                const verifiedPayloadChecksum = await sha256Text(
+                  stableJSON(packaged.data),
+                );
+                if (
+                  packaged.format !== APP.backupFormat ||
+                  verifiedPayloadChecksum !==
+                    packaged.manifest?.source_checksum
+                )
+                  throw new Error(
+                    "Gói sao lưu chưa vượt qua kiểm tra checksum nội bộ.",
+                  );
+              }
               $("#backupProgressBar").value = 95;
               const fileName = `tro-ly-doi-${scope === "year" ? "nam-hoc" : full ? "day-du" : "nhanh"}-${today()}.${ext}`;
               const outputBlob = new Blob([text], { type: "application/json" }),
@@ -9672,10 +10704,10 @@
               obj = JSON.parse(await decryptText(obj, password));
             }
             if (
-              obj.app !== APP.name ||
               !obj.data ||
               !Number.isInteger(obj.schema) ||
-              obj.schema > APP.schema
+              obj.schema > APP.schema ||
+              (obj.format && obj.format !== APP.backupFormat)
             )
               throw new Error(
                 "Tệp sai định dạng hoặc dùng lược đồ mới hơn ứng dụng.",
@@ -9707,6 +10739,11 @@
               reconstructed.data.attachments = [];
               for (const meta of obj.data.attachments || []) {
                 const f = fileById.get(meta.id);
+                if (!f && meta.deleted_at) {
+                  const { backup_blob_included, ...cleanMeta } = meta;
+                  reconstructed.data.attachments.push(cleanMeta);
+                  continue;
+                }
                 if (!f)
                   throw new Error(
                     `Thiếu dữ liệu tệp ${meta.original_name || meta.id}.`,
@@ -9715,13 +10752,19 @@
                   hash = await sha256Blob(blob);
                 if (hash !== f.sha256 || blob.size !== f.size)
                   throw new Error(`Checksum không khớp: ${f.name}.`);
+                const { backup_blob_included, ...cleanMeta } = meta;
                 reconstructed.data.attachments.push({
-                  ...meta,
+                  ...cleanMeta,
                   blob,
                   sha256: hash,
                   size: blob.size,
                 });
               }
+            } else {
+              // Bản sao lưu nhanh cũ có thể chỉ chứa metadata tệp, không có
+              // Blob. Không dùng metadata đó để thay thế tệp thật đang có.
+              delete reconstructed.data.attachments;
+              delete reconstructed.data.file_versions;
             }
             const total = Object.values(obj.data).reduce(
                 (n, rows) => n + (Array.isArray(rows) ? rows.length : 0),
@@ -9791,6 +10834,8 @@
                 else mergeStats = await db.mergeAll(reconstructed);
                 await setting("migration_9_completed", false);
                 await migrateEnhancedData();
+                await setting("migration_v4_completed", false);
+                await migrateStableV4Data();
                 await db.put(
                   "restore_staging",
                   {
@@ -10063,7 +11108,8 @@
           )
             ? school.logo_data_url
             : "";
-          panel.innerHTML = `<div class="grid-2"><div class="card"><div class="card-head"><h2>Thông tin trường</h2><span class="meta">Dùng trên báo cáo và biểu mẫu</span></div><div class="card-body"><form id="schoolCenterForm"><div class="form-grid"><div class="field full"><label class="required">Tên trường</label><input name="name" value="${esc(school?.name || "")}" required maxlength="180"></div><div class="field"><label class="required">Cấp học</label><select name="school_level" required><option value="TH" ${school?.school_level === "TH" ? "selected" : ""}>Tiểu học</option><option value="THCS" ${!school?.school_level || school?.school_level === "THCS" ? "selected" : ""}>Trung học cơ sở</option><option value="LIEN_CAP" ${school?.school_level === "LIEN_CAP" ? "selected" : ""}>Liên cấp TH–THCS</option></select></div><div class="field"><label>Mã trường</label><input name="code" value="${esc(school?.code || "")}" maxlength="60"></div><div class="field full"><label>Địa chỉ</label><input name="address" value="${esc(school?.address || "")}" maxlength="250"></div><div class="field"><label>Điện thoại</label><input name="phone" value="${esc(school?.phone || "")}" inputmode="tel" maxlength="30"></div><div class="field"><label>Email</label><input name="email" value="${esc(school?.email || "")}" type="email" maxlength="150"></div><div class="field"><label>Tên Liên đội/Sao nhi đồng</label><input name="team_name" value="${esc(school?.team_name || "Liên đội")}" maxlength="180"></div><div class="field"><label>Năm học ghi trên biểu mẫu</label><input name="current_school_year" value="${esc(school?.current_school_year || state.cache.years.find((year) => year.id === state.yearId)?.name || "")}" maxlength="30"></div><div class="field"><label>Người lập báo cáo</label><input name="reporter" value="${esc(school?.reporter || "")}" maxlength="150"></div><div class="field"><label>Chức danh</label><input name="reporter_title" value="${esc(school?.reporter_title || "Tổng phụ trách Đội")}" maxlength="120"></div></div></form><button class="btn primary mt" id="saveSchoolCenter">Lưu thông tin</button></div></div><div class="card"><div class="card-head"><h2>Logo trường</h2><span class="meta">PNG/JPG/WebP/SVG • tối đa 1 MB</span></div><div class="card-body"><div id="schoolLogoPreview" style="min-height:180px;display:grid;place-items:center;border:1px dashed var(--line);border-radius:12px;background:var(--soft)">${logo ? `<img src="${esc(logo)}" alt="Logo trường" style="max-width:180px;max-height:160px;object-fit:contain">` : '<span class="muted">Chưa có logo</span>'}</div><div class="toolbar mt"><label class="btn" for="schoolLogoFile">Chọn logo</label><input id="schoolLogoFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" class="hidden"><button class="btn danger" id="removeSchoolLogo" type="button" ${logo ? "" : "disabled"}>Xóa logo</button></div><div class="notice mt">Logo được lưu cục bộ trong hồ sơ trường và đi cùng gói sao lưu; không tải lên dịch vụ ngoài ứng dụng.</div></div></div></div>`;
+          const selectedLevel = school?.school_level || APP.schoolLevel;
+          panel.innerHTML = `<div class="grid-2"><div class="card"><div class="card-head"><h2>Thông tin trường</h2><span class="meta">Dùng trên báo cáo và biểu mẫu</span></div><div class="card-body"><form id="schoolCenterForm"><div class="form-grid"><div class="field full"><label class="required">Tên trường</label><input name="name" value="${esc(school?.name || "")}" required maxlength="180"></div><div class="field"><label class="required">Cấp học</label><select name="school_level" required><option value="TH" ${selectedLevel === "TH" ? "selected" : ""}>Tiểu học</option><option value="THCS" ${selectedLevel === "THCS" ? "selected" : ""}>Trung học cơ sở</option><option value="LIEN_CAP" ${selectedLevel === "LIEN_CAP" ? "selected" : ""}>Liên cấp Tiểu học – THCS</option></select></div><div class="field"><label>Mã trường</label><input name="code" value="${esc(school?.code || "")}" maxlength="60"></div><div class="field full"><label>Địa chỉ</label><input name="address" value="${esc(school?.address || "")}" maxlength="250"></div><div class="field"><label>Điện thoại</label><input name="phone" value="${esc(school?.phone || "")}" inputmode="tel" maxlength="30"></div><div class="field"><label>Email</label><input name="email" value="${esc(school?.email || "")}" type="email" maxlength="150"></div><div class="field"><label>Tên Liên đội/Sao nhi đồng</label><input name="team_name" value="${esc(school?.team_name || "Liên đội")}" maxlength="180"></div><div class="field"><label>Năm học ghi trên biểu mẫu</label><input name="current_school_year" value="${esc(school?.current_school_year || state.cache.years.find((year) => year.id === state.yearId)?.name || "")}" maxlength="30"></div><div class="field"><label>Người lập báo cáo</label><input name="reporter" value="${esc(school?.reporter || "")}" maxlength="150"></div><div class="field"><label>Chức danh</label><input name="reporter_title" value="${esc(school?.reporter_title || "Tổng phụ trách Đội")}" maxlength="120"></div></div></form><button class="btn primary mt" id="saveSchoolCenter">Lưu thông tin</button></div></div><div class="card"><div class="card-head"><h2>Logo trường</h2><span class="meta">PNG/JPG/WebP/SVG • tối đa 1 MB</span></div><div class="card-body"><div id="schoolLogoPreview" style="min-height:180px;display:grid;place-items:center;border:1px dashed var(--line);border-radius:12px;background:var(--soft)">${logo ? `<img src="${esc(logo)}" alt="Logo trường" style="max-width:180px;max-height:160px;object-fit:contain">` : '<span class="muted">Chưa có logo</span>'}</div><div class="toolbar mt"><label class="btn" for="schoolLogoFile">Chọn logo</label><input id="schoolLogoFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" class="hidden"><button class="btn danger" id="removeSchoolLogo" type="button" ${logo ? "" : "disabled"}>Xóa logo</button></div><div class="notice mt">Logo được lưu trong hồ sơ trường, được đồng bộ và đi cùng bản sao lưu.</div></div></div></div>`;
           let pendingLogo = logo;
           $("#schoolLogoFile").onchange = async (event) => {
             const file = event.target.files[0];
@@ -10088,11 +11134,14 @@
           $("#saveSchoolCenter").onclick = async () => {
             const f = $("#schoolCenterForm");
             if (!f.reportValidity()) return;
-            await db.put("schools", {
+            const savedSchool = await db.put("schools", {
               ...(school || {}),
               ...Object.fromEntries(new FormData(f)),
               logo_data_url: pendingLogo,
+              is_sample: false,
             });
+            await setting("onboarded", true);
+            updateBrandIdentity(savedSchool);
             toast("Đã lưu thông tin trường");
           };
         }
@@ -10119,11 +11168,12 @@
           panel.innerHTML = `<div class="card"><div class="card-head"><h2>Quản lý cơ sở</h2><span class="meta">${campuses.length} cơ sở</span></div><div class="card-body"><div class="toolbar"><button class="btn primary" id="addCampusCenter">＋ Thêm cơ sở</button></div><div class="notice">Có thể thêm cơ sở mới hoặc sửa tên, mã cơ sở bất cứ lúc nào. Việc đổi tên/mã không làm mất liên kết dữ liệu. Chỉ xóa được cơ sở chưa có lớp hoặc dữ liệu nghiệp vụ.</div><div class="table-wrap" style="max-height:300px"><table><thead><tr><th>TT</th><th>Tên cơ sở</th><th>Mã cơ sở</th><th>Số lớp</th><th>Thao tác</th></tr></thead><tbody>${campuses.map((campus, index) => `<tr><td>${index + 1}</td><td class="wrap"><strong>${esc(campus.name)}</strong></td><td>${esc(campus.code || "—")}</td><td>${Number(classCountByCampus[campus.id] || 0).toLocaleString("vi-VN")}</td><td><div class="row-actions"><button class="link-btn" data-edit-campus="${campus.id}">Sửa</button><button class="link-btn red" data-delete-campus="${campus.id}">Xóa</button></div></td></tr>`).join("") || '<tr><td colspan="5" class="empty">Chưa có cơ sở. Hãy chọn “Thêm cơ sở”.</td></tr>'}</tbody></table></div></div></div><div class="card mt"><div class="card-head"><h2>Vòng đời năm học</h2><span class="meta">${years.length} năm</span></div><div class="card-body"><div class="toolbar"><button class="btn primary" id="createAcademicYear">＋ Tạo năm học mới</button><button class="btn" id="closeAcademicYear" ${activeYear?.status === "archived" ? "disabled" : ""}>Đóng năm đang chọn</button></div><div class="notice">Năm đã đóng mặc định chỉ đọc. Muốn hiệu chỉnh phải mở quyền trong phiên và ghi lý do; mọi thao tác được lưu nhật ký.</div><div class="table-wrap" style="max-height:360px"><table><thead><tr><th>Năm học</th><th>Thời gian</th><th>Học kỳ/tuần</th><th>Trạng thái</th><th>Quyền sửa phiên này</th><th>Thao tác</th></tr></thead><tbody>${years
             .map((year) => {
               const override = state.yearEditOverrides.has(year.id);
-              return `<tr><td><strong>${esc(year.name)}</strong>${year.is_current ? " • hiện hành" : ""}</td><td>${fmtDate(year.start_date)} – ${fmtDate(year.end_date)}</td><td>${year.id === state.yearId ? `${semesters.length}/${weeks.length}` : "—"}</td><td>${year.status === "archived" || year.read_only ? '<span class="badge yellow">Đã đóng • chỉ đọc</span>' : '<span class="badge green">Đang mở</span>'}</td><td>${override ? '<span class="badge red">Đang mở sửa có lý do</span>' : "Mặc định"}</td><td>${year.status === "archived" || year.read_only ? `<button class="link-btn" data-year-edit="${year.id}">${override ? "Đóng quyền sửa" : "Mở sửa có lý do"}</button>` : "—"}</td></tr>`;
+              const yearWeeks = weeks.filter((item) => item.school_year_id === year.id);
+              return `<tr><td><strong>${esc(year.name)}</strong>${year.is_current ? " • hiện hành" : ""}</td><td>${fmtDate(year.start_date)} – ${fmtDate(year.end_date)}</td><td>${year.id === state.yearId ? `${semesters.length}/${yearWeeks.length}` : yearWeeks.length || Number(year.week_count || 0) || "—"}</td><td>${year.status === "archived" || year.read_only ? '<span class="badge yellow">Đã đóng • chỉ đọc</span>' : '<span class="badge green">Đang mở</span>'}</td><td>${override ? '<span class="badge red">Đang mở sửa có lý do</span>' : "Mặc định"}</td><td><button class="link-btn" data-edit-year="${year.id}">Sửa năm học</button>${year.status === "archived" || year.read_only ? `<button class="link-btn" data-year-edit="${year.id}">${override ? "Đóng quyền sửa" : "Mở sửa có lý do"}</button>` : ""}</td></tr>`;
             })
             .join(
               "",
-            )}</tbody></table></div></div></div><div class="grid-2 mt"><div class="card"><div class="card-head"><h2>Quy tắc tạo năm</h2></div><div class="card-body"><ul><li>Tạo mới học kỳ và 40 tuần theo ngày bắt đầu.</li><li>Chỉ sao chép lớp và bộ tiêu chí khi được chọn.</li><li>Không sao chép điểm, xếp hạng, hoạt động, công việc đã phát sinh hay báo cáo cũ.</li></ul></div></div><div class="card"><div class="card-head"><h2>Quy tắc đóng năm</h2></div><div class="card-body"><ul><li>Kiểm tra bảng điểm chưa khóa, việc chưa xong và báo cáo nháp.</li><li>Tạo snapshot bảo vệ, báo cáo tổng kết chốt và gói năm học.</li><li>Sau khi đóng, bản ghi năm cũ chuyển sang chỉ đọc.</li></ul></div></div></div>`;
+            )}</tbody></table></div></div></div><div class="grid-2 mt"><div class="card"><div class="card-head"><h2>Quy tắc tạo năm</h2></div><div class="card-body"><ul><li>Ngày bắt đầu, ngày kết thúc và số tuần đều có thể chỉnh sửa.</li><li>Chỉ sao chép lớp và bộ tiêu chí khi được chọn.</li><li>Không sao chép điểm, xếp hạng, hoạt động, công việc đã phát sinh hay báo cáo cũ.</li></ul></div></div><div class="card"><div class="card-head"><h2>Quy tắc đóng năm</h2></div><div class="card-body"><ul><li>Kiểm tra bảng điểm chưa khóa, việc chưa xong và báo cáo nháp.</li><li>Tạo snapshot bảo vệ, báo cáo tổng kết chốt và gói năm học.</li><li>Sau khi đóng, bản ghi năm cũ chuyển sang chỉ đọc.</li></ul></div></div></div>`;
           $("#addCampusCenter").onclick = () => campusForm();
           $("#addCampusCenter").parentElement.insertAdjacentHTML(
             "beforeend",
@@ -10155,12 +11205,125 @@
             (button) =>
               (button.onclick = () => deleteCampus(button.dataset.deleteCampus)),
           );
+          $$('[data-edit-year]').forEach(
+            (button) =>
+              (button.onclick = () => editAcademicYear(button.dataset.editYear)),
+          );
           $("#createAcademicYear").onclick = showCreateAcademicYear;
           $("#closeAcademicYear").onclick = () =>
             closeAcademicYear(state.yearId);
           $$("[data-year-edit]").forEach((button) => {
             button.onclick = () => toggleYearEdit(button.dataset.yearEdit);
           });
+        }
+
+        async function editAcademicYear(yearId) {
+          const year = await db.get("school_years", yearId);
+          if (!year) return toast("Không tìm thấy năm học.", "bad");
+          if (
+            (year.status === "archived" || year.read_only) &&
+            !state.yearEditOverrides.has(yearId)
+          )
+            return toast(
+              "Năm học đã đóng. Hãy chọn “Mở sửa có lý do” trước.",
+              "bad",
+            );
+          const currentWeeks = sortWeeksAscending(
+              (await db.all("school_weeks")).filter(
+                (row) => row.school_year_id === yearId,
+              ),
+            ),
+            activeCount = currentWeeks.filter(
+              (row) => row.active !== false,
+            ).length || Number(year.week_count || 40);
+          openModal(
+            "Sửa năm học và tuần",
+            `<form id="editAcademicYearForm"><div class="form-grid"><div class="field full"><label class="required">Tên năm học</label><input name="name" value="${esc(year.name || "")}" required maxlength="40"></div><div class="field"><label class="required">Ngày bắt đầu năm học/Tuần 1</label><input type="date" name="start_date" value="${esc(year.start_date || "")}" required></div><div class="field"><label class="required">Ngày kết thúc năm học</label><input type="date" name="end_date" value="${esc(year.end_date || "")}" required></div><div class="field"><label class="required">Số tuần trong năm học</label><input type="number" name="week_count" min="1" max="53" value="${activeCount}" required><small>Thông thường 35–40 tuần; vẫn cho phép đơn vị nhập số đặc biệt.</small></div><label class="check-row"><input type="checkbox" name="is_current" ${year.is_current ? "checked" : ""}> Đặt làm năm học hiện hành</label></div><div class="notice warn mt">Ứng dụng giữ nguyên ID các tuần đã có để không đứt liên kết điểm, báo cáo và lịch sử. Tuần vượt số lượng mới sẽ chuyển sang ngừng sử dụng, không bị xóa.</div></form>`,
+            `<button class="btn" id="cancelEditAcademicYear">Hủy</button><button class="btn primary" id="saveEditAcademicYear">Lưu thay đổi</button>`,
+            true,
+          );
+          $("#cancelEditAcademicYear").onclick = closeModal;
+          $("#saveEditAcademicYear").onclick = async () => {
+            const form = $("#editAcademicYearForm");
+            if (!form.reportValidity()) return;
+            const values = Object.fromEntries(new FormData(form)),
+              weekCount = Number(values.week_count);
+            if (values.start_date >= values.end_date)
+              return toast("Ngày kết thúc phải sau ngày bắt đầu.", "bad");
+            if (!Number.isInteger(weekCount) || weekCount < 1 || weekCount > 53)
+              return toast("Số tuần phải từ 1 đến 53.", "bad");
+            await createInternalSnapshot(`Trước sửa năm học ${year.name}`, {
+              tier: "protected",
+              protectedSnapshot: true,
+              reason: "before-edit-academic-year",
+              yearId,
+            });
+            if (values.is_current) {
+              for (const item of await db.all("school_years"))
+                if (item.id !== yearId && item.is_current)
+                  await db.put("school_years", { ...item, is_current: false });
+            }
+            await db.put("school_years", {
+              ...year,
+              name: values.name.trim(),
+              start_date: values.start_date,
+              end_date: values.end_date,
+              week_count: weekCount,
+              is_current: !!values.is_current,
+            });
+            const first = new Date(values.start_date + "T00:00:00");
+            for (let index = 0; index < Math.max(currentWeeks.length, weekCount); index++) {
+              const existing = currentWeeks[index],
+                number = index + 1;
+              if (number <= weekCount) {
+                const start = new Date(first),
+                  end = new Date(first);
+                start.setDate(start.getDate() + index * 7);
+                end.setDate(start.getDate() + 6);
+                await db.put("school_weeks", {
+                  ...(existing || {}),
+                  id: existing?.id || uid(),
+                  school_year_id: yearId,
+                  academic_year_id: yearId,
+                  number,
+                  name: `Tuần ${number}`,
+                  start_date: localISO(start),
+                  end_date: localISO(end),
+                  active: true,
+                });
+              } else if (existing?.active !== false)
+                await db.put("school_weeks", {
+                  ...existing,
+                  active: false,
+                  inactive_reason: "Giảm số tuần của năm học",
+                });
+            }
+            const semesterRows = (await db.all("semesters"))
+              .filter((row) => row.school_year_id === yearId)
+              .sort((a, b) => String(a.start_date || "").localeCompare(String(b.start_date || "")));
+            if (semesterRows.length === 2) {
+              const middle = new Date(values.start_date + "T00:00:00");
+              middle.setDate(middle.getDate() + Math.max(1, Math.floor(weekCount / 2) * 7) - 1);
+              if (localISO(middle) >= values.end_date)
+                middle.setTime(new Date(values.end_date + "T00:00:00").getTime() - 86400000);
+              await db.put("semesters", {
+                ...semesterRows[0],
+                start_date: values.start_date,
+                end_date: localISO(middle),
+              });
+              await db.put("semesters", {
+                ...semesterRows[1],
+                start_date: addDays(localISO(middle), 1),
+                end_date: values.end_date,
+              });
+            }
+            closeModal();
+            state.yearId = yearId;
+            state.weekId = "";
+            await loadContext();
+            toast("Đã cập nhật năm học; dữ liệu cũ và liên kết tuần được giữ nguyên.");
+            renderSettings();
+          };
         }
 
         async function showCreateAcademicYear() {
@@ -10174,7 +11337,7 @@
               ) + 1;
           openModal(
             "Tạo năm học mới",
-            `<form id="academicYearForm"><div class="form-grid"><div class="field full"><label class="required">Tên năm học</label><input name="name" value="${startYear}–${startYear + 1}" required></div><div class="field"><label class="required">Ngày bắt đầu</label><input type="date" name="start_date" value="${startYear}-08-15" required></div><div class="field"><label class="required">Ngày kết thúc</label><input type="date" name="end_date" value="${startYear + 1}-05-31" required></div></div><fieldset class="mt"><legend>Sao chép có chọn lọc từ ${esc(current?.name || "năm hiện tại")}</legend><label class="check-row"><input type="checkbox" name="copy_classes" checked> Danh sách lớp và giáo viên (tạo ID mới)</label><label class="check-row"><input type="checkbox" name="copy_criteria" checked> Bộ tiêu chí và tiêu chí (chuyển về dự thảo)</label><label class="check-row"><input type="checkbox" name="copy_templates" checked> Mẫu công việc dùng chung</label></fieldset><div class="notice warn mt">Không sao chép điểm thi đua, xếp hạng, công việc phát sinh, hoạt động, hồ sơ giao dịch hoặc báo cáo năm cũ.</div></form>`,
+            `<form id="academicYearForm"><div class="form-grid"><div class="field full"><label class="required">Tên năm học</label><input name="name" value="${startYear}–${startYear + 1}" required></div><div class="field"><label class="required">Ngày bắt đầu năm học/Tuần 1</label><input type="date" name="start_date" value="${startYear}-08-15" required></div><div class="field"><label class="required">Ngày kết thúc</label><input type="date" name="end_date" value="${startYear + 1}-05-31" required></div><div class="field"><label class="required">Số tuần</label><input type="number" name="week_count" min="1" max="53" value="40" required><small>Thông thường 35–40 tuần.</small></div></div><fieldset class="mt"><legend>Sao chép có chọn lọc từ ${esc(current?.name || "năm hiện tại")}</legend><label class="check-row"><input type="checkbox" name="copy_classes" checked> Danh sách lớp và giáo viên (tạo ID mới)</label><label class="check-row"><input type="checkbox" name="copy_criteria" checked> Bộ tiêu chí và tiêu chí (chuyển về dự thảo)</label><label class="check-row"><input type="checkbox" name="copy_templates" checked> Mẫu công việc dùng chung</label></fieldset><div class="notice warn mt">Không sao chép điểm thi đua, xếp hạng, công việc phát sinh, hoạt động, hồ sơ giao dịch hoặc báo cáo năm cũ.</div></form>`,
             `<button class="btn" id="cancelCreateYear">Hủy</button><button class="btn primary" id="confirmCreateYear">Tạo năm học</button>`,
             true,
           );
@@ -10183,8 +11346,11 @@
             const form = $("#academicYearForm");
             if (!form.reportValidity()) return;
             const values = Object.fromEntries(new FormData(form));
+            const weekCount = Number(values.week_count);
             if (values.start_date >= values.end_date)
               return toast("Ngày kết thúc phải sau ngày bắt đầu.", "bad");
+            if (!Number.isInteger(weekCount) || weekCount < 1 || weekCount > 53)
+              return toast("Số tuần phải từ 1 đến 53.", "bad");
             if (
               (await db.all("school_years")).some(
                 (year) =>
@@ -10216,6 +11382,7 @@
                 start_date: values.start_date,
                 end_date: values.end_date,
                 is_current: true,
+                week_count: weekCount,
                 status: "active",
                 read_only: false,
               });
@@ -10238,11 +11405,8 @@
                 },
               ]);
               const firstMonday = new Date(values.start_date + "T00:00:00");
-              firstMonday.setDate(
-                firstMonday.getDate() + ((8 - firstMonday.getDay()) % 7),
-              );
               const newWeeks = [];
-              for (let number = 1; number <= 40; number++) {
+              for (let number = 1; number <= weekCount; number++) {
                 const start = new Date(firstMonday),
                   end = new Date(firstMonday);
                 start.setDate(start.getDate() + (number - 1) * 7);
@@ -11604,6 +12768,124 @@
           }
         }
 
+        async function migrateStableV4Data() {
+          if (await setting("migration_v4_completed")) return;
+          const operation = await startOperation("stable_v4_migration", {
+            target_version: "4.0.0",
+            preserve_ids: true,
+          });
+          try {
+            await createInternalSnapshot("Trước nâng cấp ổn định v4", {
+              tier: "protected",
+              protectedSnapshot: true,
+              reason: "before-stable-v4-migration",
+            });
+            let updated = 0;
+            const students = await db.allIncludingDeleted("students");
+            for (const row of students) {
+              const next = {
+                ...row,
+                organization_status: row.organization_status || "",
+                organization_joined_date:
+                  row.organization_joined_date || "",
+                policy_groups: row.policy_groups || "",
+                difficulty_status: row.difficulty_status || "",
+                special_needs: row.special_needs || "",
+                support_notes: row.support_notes || "",
+                guardian_name: row.guardian_name || "",
+                guardian_phone: row.guardian_phone || "",
+              };
+              if (stableJSON(next) !== stableJSON(row)) {
+                await db.put("students", next);
+                updated++;
+              }
+            }
+            for (const store of ["plans", "tasks"]) {
+              for (const row of await db.allIncludingDeleted(store)) {
+                const next = {
+                  ...row,
+                  result: row.result || "",
+                  evidence: row.evidence || "",
+                  notes: row.notes || "",
+                };
+                if (stableJSON(next) !== stableJSON(row)) {
+                  await db.put(store, next);
+                  updated++;
+                }
+              }
+            }
+            for (const sheet of await db.allIncludingDeleted(
+              "weekly_score_sheets",
+            )) {
+              if (sheet.class_notes) continue;
+              await db.put("weekly_score_sheets", {
+                ...sheet,
+                class_notes: {},
+              });
+              updated++;
+            }
+            const years = await db.allIncludingDeleted("school_years"),
+              allWeeks = await db.allIncludingDeleted("school_weeks");
+            for (const year of years) {
+              if (Number(year.week_count) > 0) continue;
+              const weekCount = allWeeks.filter(
+                (week) =>
+                  week.school_year_id === year.id && week.active !== false,
+              ).length;
+              await db.put("school_years", {
+                ...year,
+                week_count: weekCount || 40,
+              });
+              updated++;
+            }
+            const school = (await db.all("schools"))[0];
+            if (school && !school.school_level) {
+              const grades = (await db.all("classes"))
+                .filter((row) => row.active !== false)
+                .map((row) => Number(row.grade))
+                .filter(Number.isFinite);
+              const hasPrimary = grades.some((grade) => grade <= 5),
+                hasSecondary = grades.some((grade) => grade >= 6),
+                inferredLevel =
+                  hasPrimary && hasSecondary
+                    ? "LIEN_CAP"
+                    : hasPrimary
+                      ? "TH"
+                      : hasSecondary
+                        ? "THCS"
+                        : APP.schoolLevel;
+              await db.put("schools", {
+                ...school,
+                school_level: inferredLevel,
+              });
+              updated++;
+            }
+            await setting("migration_v4_completed", true);
+            await db.put(
+              "migration_logs",
+              {
+                from_schema: APP.schema,
+                to_schema: APP.schema,
+                status: "success",
+                normalized_records: updated,
+                summary: `Nâng cấp v4 đã bổ sung trường dữ liệu mới cho ${updated} bản ghi; giữ nguyên toàn bộ ID và dữ liệu cũ.`,
+              },
+              { audit: false },
+            );
+            await finishOperation(operation, "completed", {
+              normalized_records: updated,
+            });
+          } catch (error) {
+            await finishOperation(operation, "failed", {
+              error: error.message,
+            }).catch(() => {});
+            throw new Error(
+              "Nâng cấp dữ liệu v4 chưa hoàn tất; dữ liệu cũ vẫn còn trong điểm khôi phục. " +
+                error.message,
+            );
+          }
+        }
+
         async function ensureStorageProtection() {
           if (!navigator.storage) return;
           try {
@@ -11832,18 +13114,37 @@
           let storeIndex = 0;
           for (const store of stores) {
             if (signal?.aborted) throw new DOMException("Đã hủy", "AbortError");
+            if (
+              !includeFiles &&
+              ["attachments", "file_versions"].includes(store)
+            ) {
+              storeIndex++;
+              onProgress({
+                phase: "records",
+                ratio: storeIndex / stores.length,
+              });
+              continue;
+            }
             let rows = await db.allIncludingDeleted(store);
             if (yearId)
               rows = rows.filter(
                 (row) => !row.school_year_id || row.school_year_id === yearId,
               );
             if (store === "attachments") {
-              data[store] = rows.map(({ blob, ...meta }) => meta);
+              data[store] = rows.map(({ blob, ...meta }) => ({
+                ...meta,
+                backup_blob_included:
+                  includeFiles && blob instanceof Blob,
+              }));
               if (includeFiles)
                 for (let index = 0; index < rows.length; index++) {
                   if (signal?.aborted)
                     throw new DOMException("Đã hủy", "AbortError");
                   const row = rows[index];
+                  if (!row.deleted_at && !(row.blob instanceof Blob))
+                    throw new Error(
+                      `Tệp ${row.original_name || row.name || row.id} chưa có nội dung trên thiết bị; hãy đồng bộ lại rồi tạo sao lưu đầy đủ.`,
+                    );
                   if (row.blob instanceof Blob)
                     files.push({
                       id: row.id,

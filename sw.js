@@ -3,11 +3,10 @@
 // Bump this when the deployed app shell changes. app-config.js is always
 // refreshed from the network so a teacher can replace the public config
 // without being trapped by an older Service Worker cache.
-const CACHE_NAME = "tpt-doi-thcs-v3-2-1";
+const CACHE_NAME = "tpt-doi-v4-0-0-stable-20260901";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./app-config.js",
   "./manifest.webmanifest",
   "./offline.html",
   "./404.html",
@@ -17,6 +16,7 @@ const APP_SHELL = [
   "./school-profile/default.json",
   "./assets/js/import-engine.js",
   "./assets/js/upgrade-features.js",
+  "./assets/images/logo-doi.png",
   "./assets/icons/tpt-doi-icon.svg",
   "./assets/icons/tpt-doi-icon-192.png",
   "./assets/icons/tpt-doi-icon-512.png",
@@ -30,13 +30,37 @@ const APP_SHELL = [
   "./assets/vendor/tesseract/tesseract-core-simd-lstm.wasm",
   "./assets/vendor/tesseract/lang-data/vie.traineddata.gz",
 ];
+const REQUIRED_SHELL = new Set([
+  "./index.html",
+  "./assets/js/import-engine.js",
+  "./assets/js/upgrade-features.js",
+  "./assets/images/logo-doi.png",
+]);
 
 const shellUrls = new Set(
   APP_SHELL.map((path) => new URL(path, self.registration.scope).href),
 );
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(async (cache) => {
+      const results = await Promise.allSettled(
+        APP_SHELL.map((path) => cache.add(path)),
+      );
+      const missingRequired = results
+        .map((result, index) => ({ result, path: APP_SHELL[index] }))
+        .filter(
+          ({ result, path }) =>
+            result.status === "rejected" && REQUIRED_SHELL.has(path),
+        )
+        .map(({ path }) => path);
+      if (missingRequired.length)
+        throw new Error(
+          `Không thể tải các tệp ứng dụng bắt buộc: ${missingRequired.join(", ")}`,
+        );
+      await self.skipWaiting();
+    }),
+  );
 });
 
 self.addEventListener("activate", (event) => {
@@ -46,7 +70,12 @@ self.addEventListener("activate", (event) => {
       .then((keys) =>
         Promise.all(
           keys
-            .filter((key) => key.startsWith("tpt-doi-thcs-") && key !== CACHE_NAME)
+            .filter(
+              (key) =>
+                (key.startsWith("tpt-doi-thcs-") ||
+                  key.startsWith("tpt-doi-")) &&
+                key !== CACHE_NAME,
+            )
             .map((key) => caches.delete(key)),
         ),
       )
@@ -78,8 +107,14 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  const configUrl = new URL("./app-config.js", self.registration.scope).href;
-  if (url.href === configUrl) {
+  const networkFirstPaths = new Set(
+    [
+      "./app-config.js",
+      "./assets/js/import-engine.js",
+      "./assets/js/upgrade-features.js",
+    ].map((path) => new URL(path, self.registration.scope).pathname),
+  );
+  if (networkFirstPaths.has(url.pathname)) {
     event.respondWith(
       fetch(event.request, { cache: "no-store" })
         .then((response) => {
