@@ -1911,7 +1911,7 @@
       const previewFields = mappedFields.length ? mappedFields : schema.fields.slice(0, 6);
       return `<div class="card"><div class="card-head"><h2>Nhận diện và ánh xạ</h2><span class="meta">${esc(session.sourceName || "Nguồn dữ liệu")}</span></div><div class="card-body">${session.extractionWarnings?.length ? `<div class="notice warn">Tài liệu Word có ${session.extractionWarnings.length} cảnh báo bố cục; cần kiểm tra preview.</div>` : ""}<div class="form-grid"><div class="field"><label>Sheet/bảng/trang</label><select id="importTableSelect">${session.tables.map((item, index) => `<option value="${index}" ${session.tableIndex === index ? "selected" : ""}>${esc(item.name)}</option>`).join("")}</select></div><div class="field"><label>Hàng tiêu đề</label><input id="importHeaderRow" type="number" min="1" max="${Math.min(20, table.rows.length)}" value="${session.headerIndex + 1}"></div><div class="field"><label>Mẫu ánh xạ đã lưu</label><select id="importMappingTemplate"><option value="">— Chọn mẫu —</option>${(session.availableMappings || []).map((row) => `<option value="${row.id}">${esc(row.name)}</option>`).join("")}</select></div></div><div class="toolbar mt"><button class="btn small" id="autoImportMapping">Tự ánh xạ</button><button class="btn small" id="clearImportMapping">Xóa ánh xạ</button><button class="btn small" id="saveImportMapping">Lưu mẫu ánh xạ</button><button class="btn small" id="applyImportMapping">Dùng mẫu đã chọn</button></div><div class="mapping-grid mt"><div class="mapping-head">Trường dữ liệu trong ứng dụng</div><div class="mapping-head">Cột trong nguồn</div><div class="mapping-head">Giá trị mặc định nếu ô trống</div>${schema.fields.map(([name, label, required]) => `<label>${esc(label)}${required ? " *" : ""}</label><select data-import-map="${name}"><option value="">— Không ánh xạ —</option>${headers.map((header, index) => `<option value="${index}" ${session.mapping[name] === index ? "selected" : ""}>${esc(header || `Cột ${index + 1}`)}</option>`).join("")}</select><input data-import-default="${name}" value="${esc(session.defaults[name] || "")}" placeholder="Tùy chọn">`).join("")}</div></div></div>
         <div class="metric-row mt"><div class="metric"><strong>${session.validated.length.toLocaleString("vi-VN")}</strong><span>Tổng dòng</span></div><div class="metric"><strong>${validCount.toLocaleString("vi-VN")}</strong><span>Hợp lệ</span></div><div class="metric"><strong>${errorCount.toLocaleString("vi-VN")}</strong><span>Dòng lỗi</span></div><div class="metric"><strong>${duplicateCount.toLocaleString("vi-VN")}</strong><span>Đã tồn tại</span></div><div class="metric"><strong>${warningCount.toLocaleString("vi-VN")}</strong><span>Cảnh báo</span></div></div>
-        <div class="card mt"><div class="card-head"><h2>Xem trước</h2><div><button class="btn small" id="downloadImportErrors" ${errorCount ? "" : "disabled"}>Tải danh sách lỗi</button></div></div><div class="card-body"><div class="notice ${errorCount ? "danger" : duplicateCount ? "warn" : ""}">${errorCount ? "Phải sửa hoặc loại bỏ mọi dòng lỗi trước khi nhập." : "Dữ liệu chưa được ghi. Hãy kiểm tra và xác nhận cách xử lý trùng."}</div><div class="table-wrap" style="max-height:480px"><table><thead><tr><th>Dòng</th><th>Kết quả</th>${previewFields.map(([, label]) => `<th>${esc(label)}</th>`).join("")}</tr></thead><tbody>${model.rows.map((item) => `<tr class="${item.errors.length ? "row-error" : item.warnings.length ? "row-warning" : ""}"><td>${item.sourceRow}</td><td class="wrap">${item.errors.length ? `<strong>${esc(item.errors.join("; "))}</strong>` : item.warnings.length ? esc(item.warnings.join("; ")) : "Hợp lệ"}</td>${previewFields.map(([name]) => `<td><input class="cell-edit" data-import-row="${item.sourceRow}" data-import-field="${name}" value="${esc(item.values[name] ?? "")}"></td>`).join("")}</tr>`).join("") || `<tr><td colspan="${previewFields.length + 2}" class="empty">Không có dòng dữ liệu.</td></tr>`}</tbody></table></div>${paginationHtml("importPreview", model)}<div class="toolbar mt"><button class="btn" id="cancelImportSession">Làm lại</button><button class="btn primary" id="commitImportData" ${!session.validated.length || errorCount ? "disabled" : ""}>Xác nhận nhập ${validCount.toLocaleString("vi-VN")} dòng</button></div></div></div>`;
+        <div class="card mt"><div class="card-head"><h2>Xem trước</h2><div><button class="btn small" id="downloadImportErrors" ${errorCount ? "" : "disabled"}>Tải danh sách lỗi</button></div></div><div class="card-body"><div class="notice ${errorCount ? "danger" : warningCount || duplicateCount ? "warn" : ""}">${errorCount ? "Phải sửa hoặc loại bỏ dữ liệu sai định dạng hoặc sai liên kết trước khi nhập." : warningCount ? "Có nội dung đang để trống hoặc cần lưu ý. Ứng dụng vẫn cho phép nhập và sẽ hỏi xác nhận thêm một lần." : "Dữ liệu chưa được ghi. Hãy kiểm tra và xác nhận cách xử lý trùng."}</div><div class="table-wrap" style="max-height:480px"><table><thead><tr><th>Dòng</th><th>Kết quả</th>${previewFields.map(([, label]) => `<th>${esc(label)}</th>`).join("")}</tr></thead><tbody>${model.rows.map((item) => `<tr class="${item.errors.length ? "row-error" : item.warnings.length ? "row-warning" : ""}"><td>${item.sourceRow}</td><td class="wrap">${item.errors.length ? `<strong>${esc(item.errors.join("; "))}</strong>` : item.warnings.length ? esc(item.warnings.join("; ")) : "Hợp lệ"}</td>${previewFields.map(([name]) => `<td><input class="cell-edit" data-import-row="${item.sourceRow}" data-import-field="${name}" value="${esc(item.values[name] ?? "")}"></td>`).join("")}</tr>`).join("") || `<tr><td colspan="${previewFields.length + 2}" class="empty">Không có dòng dữ liệu.</td></tr>`}</tbody></table></div>${paginationHtml("importPreview", model)}<div class="toolbar mt"><button class="btn" id="cancelImportSession">Làm lại</button><button class="btn primary" id="commitImportData" ${!session.validated.length || errorCount ? "disabled" : ""}>Xác nhận nhập ${validCount.toLocaleString("vi-VN")} dòng</button></div></div></div>`;
     }
 
     function bindImportWorkspace(session) {
@@ -2284,13 +2284,16 @@
             engine.codeText(output.task_code),
         );
         output.task_id = task?.id || null;
-        output.required = ["1", "true", "co", "có", "yes"].includes(
-          engine.keyText(output.required),
-        );
-        output.done = ["1", "true", "co", "có", "yes", "done"].includes(
-          engine.keyText(output.done),
-        );
-        output.order = Number(output.order || 0);
+        if (output.required !== "" && output.required != null)
+          output.required = ["1", "true", "co", "có", "yes"].includes(
+            engine.keyText(output.required),
+          );
+        if (output.done !== "" && output.done != null)
+          output.done = ["1", "true", "co", "có", "yes", "done"].includes(
+            engine.keyText(output.done),
+          );
+        if (output.order !== "" && output.order != null)
+          output.order = Number(output.order);
       }
       if (type === "tasks") {
         const plan = (refs.plans || []).find(
@@ -2298,11 +2301,13 @@
             engine.codeText(item.code) === engine.codeText(output.plan_code),
         );
         output.plan_id = plan?.id || output.plan_id || null;
-        output.progress = Number(output.progress || 0);
+        if (output.progress !== "" && output.progress != null)
+          output.progress = Number(output.progress);
         if (output.status === "done") output.progress = 100;
       }
       if (type === "plans") {
-        output.progress = Number(output.progress || 0);
+        if (output.progress !== "" && output.progress != null)
+          output.progress = Number(output.progress);
         if (output.status === "finished") output.progress = 100;
       }
       if (type !== "campuses") {
@@ -2312,18 +2317,47 @@
         if (type !== "score_entries" && state.weekId)
           output.week_id ||= state.weekId;
       }
-      if (type === "classes") output.active = !["inactive", "false", "0", "ngung"].includes(engine.keyText(output.status));
-      if (type === "students") output.status ||= "active";
-      if (type === "student_incidents") output.status ||= "draft";
-      if (type === "equipment") output.quantity = Number(output.quantity || 0);
+      if (type === "classes" && output.status)
+        output.active = !["inactive", "false", "0", "ngung"].includes(
+          engine.keyText(output.status),
+        );
+      if (type === "equipment" && output.quantity !== "" && output.quantity != null)
+        output.quantity = Number(output.quantity);
       return output;
     }
 
-    async function commitImport(session) {
+    async function commitImport(session, confirmedBlankFields = false) {
       const invalid = session.validated.filter((item) => !item.valid);
       if (invalid.length)
         return toast("Còn dòng lỗi; chưa ghi dữ liệu.", "bad");
       if (!session.validated.length) return toast("Không có dòng để nhập.", "bad");
+      const rowsWithBlanks = session.validated.filter(
+        (item) => item.blankFields?.length,
+      );
+      if (rowsWithBlanks.length && !confirmedBlankFields) {
+        const blankCounts = new Map();
+        for (const item of rowsWithBlanks)
+          for (const field of item.blankFields || [])
+            blankCounts.set(
+              field.label,
+              (blankCounts.get(field.label) || 0) + 1,
+            );
+        session.blankSummary = [...blankCounts.entries()].map(
+          ([label, count]) => ({ label, count }),
+        );
+        openModal(
+          "Xác nhận nhập dữ liệu còn trống",
+          `<div class="notice warn"><strong>${rowsWithBlanks.length.toLocaleString("vi-VN")} dòng có nội dung đang để trống.</strong><br>Các ô trống sẽ được giữ nguyên; ứng dụng không từ chối lượt nhập.</div><div class="table-wrap mt" style="max-height:360px"><table><thead><tr><th>Trường đang trống</th><th>Số dòng</th></tr></thead><tbody>${session.blankSummary.map((item) => `<tr><td>${esc(item.label)}</td><td>${item.count.toLocaleString("vi-VN")}</td></tr>`).join("")}</tbody></table></div><p class="meta mt">Dữ liệu sai định dạng hoặc mã liên kết không tồn tại vẫn phải sửa để tránh ghép nhầm dữ liệu.</p>`,
+          '<button class="btn" id="cancelBlankImport">Quay lại bổ sung</button><button class="btn primary" id="confirmBlankImport">Vẫn nhập dữ liệu</button>',
+          true,
+        );
+        $("#cancelBlankImport").onclick = closeModal;
+        $("#confirmBlankImport").onclick = () => {
+          closeModal();
+          commitImport(session, true);
+        };
+        return;
+      }
       session.status = "committing";
       session.progress = 3;
       session.progressLabel = "Đang tạo snapshot bảo vệ…";
@@ -2352,6 +2386,8 @@
             source_checksum: session.sourceChecksum,
             source_size: session.files.reduce((sum, file) => sum + file.size, 0),
             total_rows: session.validated.length,
+            blank_rows: rowsWithBlanks.length,
+            blank_fields: session.blankSummary || [],
             duplicate_mode: session.duplicateMode,
             status: "started",
             started_at: now(),
@@ -2382,7 +2418,9 @@
         let skipped = 0;
         for (const item of session.validated) {
           const incoming = hydrateImportedRow(session.type, item.values, session.refs);
-          const existingRow = byKey.get(businessKey(session.type, incoming));
+          const existingRow = item.blankFields?.some((field) => field.required)
+            ? null
+            : byKey.get(businessKey(session.type, incoming));
           if (existingRow && session.duplicateMode === "skip") {
             skipped += 1;
             continue;
@@ -2464,10 +2502,13 @@
           skipped,
           errors: 0,
           duration_ms: Date.now() - Date.parse(job.started_at),
+          blank_rows: rowsWithBlanks.length,
         };
         session.progressLabel = "Hoàn tất";
         await loadContext();
-        toast(`Đã nhập ${inserted} mới, cập nhật ${updated}, bỏ qua ${skipped}.`);
+        toast(
+          `Đã nhập ${inserted} mới, cập nhật ${updated}, bỏ qua ${skipped}${rowsWithBlanks.length ? `; giữ trống ${rowsWithBlanks.length} dòng` : ""}.`,
+        );
       } catch (error) {
         if (mainWritten && snapshot?.payload) {
           try {

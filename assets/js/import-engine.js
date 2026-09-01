@@ -428,7 +428,6 @@
       if (name in output && output[name]) output[name] = dateValue(output[name]);
     for (const name of ["grade", "size", "ordinal", "max_score", "score", "proposed_deduction", "quantity", "order", "progress"])
       if (name in output && output[name] !== "") output[name] = numberValue(output[name]);
-    if ("status" in output && !output.status) output.status = "active";
     if (type === "classes" || type === "students" || type === "homeroom_teachers")
       output.school_year_id = context.schoolYearId || output.school_year_id || "";
     if (type === "students") {
@@ -441,7 +440,7 @@
           doi_vien: "doi_vien",
           doan_vien: "doan_vien",
           chua_xac_dinh: "chua_xac_dinh",
-          "": "chua_xac_dinh",
+          "": "",
         })[organizationKey] || output.organization_status;
       const difficultyKey = keyText(output.difficulty_status);
       output.difficulty_status =
@@ -451,7 +450,7 @@
           can_theo_doi: "monitor",
           can_ho_tro: "support",
           can_ho_tro_khan: "urgent",
-          "": "none",
+          "": "",
         })[difficultyKey] || output.difficulty_status;
     }
     if (type !== "campuses" && context.schoolYearId) {
@@ -491,9 +490,15 @@
       const row = normalizeMappedRow(type, item.values, context);
       const errors = [];
       const warnings = [];
+      const blankFields = [];
       for (const [name, label, required] of schema.fields) {
-        if (required && (row[name] === "" || row[name] == null)) errors.push(`Thiếu ${label}`);
+        if (row[name] === "" || row[name] == null)
+          blankFields.push({ name, label, required: Boolean(required) });
       }
+      if (blankFields.length)
+        warnings.push(
+          `Đang để trống: ${blankFields.map((field) => field.label).join(", ")}`,
+        );
       for (const name of ["birth_date", "start_date", "end_date", "due_date", "completion_date", "date", "recognized_date", "organization_joined_date"])
         if (name in row && row[name] === null) errors.push(`Sai định dạng ngày ở ${name}`);
       for (const name of ["grade", "size", "ordinal", "max_score", "score", "proposed_deduction", "quantity", "order", "progress"])
@@ -510,6 +515,7 @@
         errors.push("Số lượng không được âm");
       if (type === "students") {
         if (
+          row.organization_status &&
           ![
             "chua_xac_dinh",
             "nhi_dong",
@@ -520,27 +526,31 @@
         )
           errors.push("Tình trạng Đội không hợp lệ");
         if (
+          row.difficulty_status &&
           !["none", "monitor", "support", "urgent"].includes(
             row.difficulty_status,
           )
         )
           errors.push("Tình trạng khó khăn không hợp lệ");
-        const nameKey = [codeText(row.class_code), keyText(row.full_name)].join("|");
-        if (seenNames.has(nameKey)) warnings.push("Trùng họ tên trong cùng lớp trong tệp");
-        if (existingStudentNames.has(nameKey)) warnings.push("Đã có học sinh trùng họ tên trong lớp; đối chiếu mã học sinh");
-        seenNames.add(nameKey);
+        if (row.full_name) {
+          const nameKey = [codeText(row.class_code), keyText(row.full_name)].join("|");
+          if (seenNames.has(nameKey)) warnings.push("Trùng họ tên trong cùng lớp trong tệp");
+          if (existingStudentNames.has(nameKey)) warnings.push("Đã có học sinh trùng họ tên trong lớp; đối chiếu mã học sinh");
+          seenNames.add(nameKey);
+        }
       }
-      if (type === "classes") {
+      if (type === "classes" && row.class_name) {
         const nameKey = [codeText(row.campus_code), keyText(row.class_name)].join("|");
         if (seenNames.has(nameKey) || existingClassNames.has(nameKey))
           errors.push("Trùng tên lớp trong cùng cơ sở và năm học");
         seenNames.add(nameKey);
       }
       const duplicateKey = schema.key(row, context);
-      const duplicateInFile = duplicateKey && seen.has(duplicateKey);
-      const exists = duplicateKey && existingKeys.has(duplicateKey);
+      const canCheckDuplicate = !blankFields.some((field) => field.required);
+      const duplicateInFile = canCheckDuplicate && duplicateKey && seen.has(duplicateKey);
+      const exists = canCheckDuplicate && duplicateKey && existingKeys.has(duplicateKey);
       if (duplicateInFile) errors.push("Trùng khóa trong tệp");
-      if (duplicateKey) seen.add(duplicateKey);
+      if (canCheckDuplicate && duplicateKey) seen.add(duplicateKey);
       if (exists) warnings.push("Bản ghi đã tồn tại và có thể cập nhật");
       return {
         ...item,
@@ -550,6 +560,7 @@
         valid: errors.length === 0,
         errors,
         warnings,
+        blankFields,
       };
     });
   }

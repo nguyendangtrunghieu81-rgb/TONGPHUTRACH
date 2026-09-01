@@ -658,6 +658,53 @@
         outline: 2px solid #72b5f3;
         border-color: var(--blue);
       }
+      .score-table .score-note-head,
+      .score-table .score-note-cell {
+        width: 42vw;
+        min-width: 380px;
+      }
+      .score-note-editor {
+        display: grid;
+        grid-template-columns: minmax(300px, 1fr) auto;
+        gap: 8px;
+        align-items: stretch;
+        width: 100%;
+      }
+      .score-table textarea.score-class-note {
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 300px;
+        min-height: 62px;
+        max-height: 190px;
+        padding: 8px 10px;
+        border: 1px solid #cbd8e5;
+        border-radius: 7px;
+        background: #fff;
+        color: var(--text);
+        font: inherit;
+        line-height: 1.4;
+        resize: vertical;
+      }
+      .score-table textarea.score-class-note:focus {
+        outline: 2px solid #72b5f3;
+        border-color: var(--blue);
+      }
+      .score-note-editor .btn {
+        align-self: stretch;
+        min-width: 58px;
+      }
+      @media (max-width: 760px) {
+        .score-table .score-note-head,
+        .score-table .score-note-cell {
+          min-width: 310px;
+        }
+        .score-note-editor {
+          grid-template-columns: minmax(230px, 1fr) auto;
+        }
+        .score-table textarea.score-class-note {
+          min-width: 230px;
+        }
+      }
       .score-table input.missing {
         background: #fff5d8;
       }
@@ -7559,7 +7606,7 @@
               '<div class="empty">Chưa khởi tạo bảng tuần. Chọn “Khởi tạo bảng tuần” để bắt đầu nhập.</div>');
           const map = entryMap(ctx.entries),
             locked = ctx.sheet.status === "locked";
-          area.innerHTML = `<div class="score-wrap"><table class="score-table"><thead><tr><th style="min-width:110px">Lớp</th>${ctx.criteria.map((c) => `<th title="${esc(c.name)}">${esc(c.code)}<br><small>${esc(c.group)}</small></th>`).join("")}<th>Tổng</th><th style="min-width:240px">Ghi chú đối chiếu</th><th>Trạng thái</th></tr></thead><tbody>${ctx.classes
+          area.innerHTML = `<div class="score-wrap"><table class="score-table"><thead><tr><th style="min-width:110px">Lớp</th>${ctx.criteria.map((c) => `<th title="${esc(c.name)}">${esc(c.code)}<br><small>${esc(c.group)}</small></th>`).join("")}<th>Tổng</th><th class="score-note-head">Ghi chú đối chiếu</th><th>Trạng thái</th></tr></thead><tbody>${ctx.classes
             .map((cl, ri) => {
               let total =
                   ctx.set.formula === "base"
@@ -7582,7 +7629,7 @@
                   return `<td><input class="score-input ${e ? "" : "missing"}" data-row="${ri}" data-col="${ci}" data-class="${cl.id}" data-criterion="${c.id}" data-entry="${e?.id || ""}" value="${esc(v)}" ${locked ? "disabled" : ""} aria-label="${esc(cl.class_name)} - ${esc(c.name)}"></td>`;
                 })
                 .join("");
-              return `<tr><td><strong>${esc(cl.class_name)}</strong><br><small>${esc(campusName(cl.campus_id))}</small></td>${cells}<td class="score-total" data-total="${cl.id}">${total.toFixed(1)}</td><td><div class="split"><input class="score-class-note" data-class-note="${cl.id}" value="${esc(ctx.sheet.class_notes?.[cl.id] || "")}" placeholder="Ghi lỗi, nội dung cần đối chiếu…" ${locked ? "disabled" : ""}><button class="btn small" data-save-score-note="${cl.id}" ${locked ? "disabled" : ""}>Lưu</button></div></td><td>${filled === ctx.criteria.length ? '<span class="badge green">Đủ</span>' : `<span class="badge yellow">${filled}/${ctx.criteria.length}</span>`}</td></tr>`;
+              return `<tr><td><strong>${esc(cl.class_name)}</strong><br><small>${esc(campusName(cl.campus_id))}</small></td>${cells}<td class="score-total" data-total="${cl.id}">${total.toFixed(1)}</td><td class="score-note-cell"><div class="score-note-editor"><textarea class="score-class-note" data-class-note="${cl.id}" rows="2" placeholder="Ghi lỗi, nội dung cần đối chiếu…" ${locked ? "disabled" : ""}>${esc(ctx.sheet.class_notes?.[cl.id] || "")}</textarea><button class="btn small" data-save-score-note="${cl.id}" ${locked ? "disabled" : ""}>Lưu</button></div></td><td>${filled === ctx.criteria.length ? '<span class="badge green">Đủ</span>' : `<span class="badge yellow">${filled}/${ctx.criteria.length}</span>`}</td></tr>`;
             })
             .join(
               "",
@@ -7591,6 +7638,20 @@
             i.addEventListener("change", saveScoreCell);
             i.addEventListener("keydown", scoreKeyNav);
             i.addEventListener("paste", scorePaste);
+          });
+          $$(".score-class-note").forEach((note) => {
+            const resize = () => {
+              note.style.height = "auto";
+              note.style.height = `${Math.min(190, Math.max(62, note.scrollHeight))}px`;
+            };
+            resize();
+            note.addEventListener("input", resize);
+            note.addEventListener("keydown", (event) => {
+              if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+                event.preventDefault();
+                saveScoreClassNote(ctx, note.dataset.classNote);
+              }
+            });
           });
           $$('[data-save-score-note]').forEach(
             (button) =>
